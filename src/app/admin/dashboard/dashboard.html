@@ -1,0 +1,264 @@
+<div class="container-fluid">
+
+<!-- Page Heading -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="fw-bold">Admin Dashboard</h3>
+
+  <button class="btn btn-success">
+    <i class="fa fa-plus"></i> Add Plant
+  </button>
+</div>
+
+
+<!-- Summary Cards -->
+<div class="row g-4">
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h6 class="text-muted">Total Orders</h6>
+      <h3>120</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h6 class="text-muted">Completed Orders</h6>
+      <h3 class="text-success">90</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h6 class="text-muted">Pending Orders</h6>
+      <h3 class="text-warning">20</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h6 class="text-muted">Cancelled Orders</h6>
+      <h3 class="text-danger">10</h3>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- Quick Actions -->
+<div class="card shadow-sm mt-4">
+
+  <div class="card-header fw-bold">
+    Quick Actions
+  </div>
+
+  <div class="card-body">
+
+    <div class="row text-center">
+
+      <div class="col-md-4">
+        <button class="btn btn-outline-success w-100">
+          Add Plant
+        </button>
+      </div>
+
+      <div class="col-md-4">
+        <button class="btn btn-outline-primary w-100">
+          View Orders
+        </button>
+      </div>
+
+      <div class="col-md-4">
+        <button class="btn btn-outline-warning w-100">
+          Manage Users
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- Recent Orders -->
+<div class="card shadow-sm mt-4">
+
+  <div class="card-header fw-bold">
+    Recent Orders
+  </div>
+
+  <div class="card-body">
+
+    <table class="table table-hover">
+
+      <thead class="table-light">
+        <tr>
+          <th>Order ID</th>
+          <th>User</th>
+          <th>Plant</th>
+          <th>Status</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>#101</td>
+          <td>Sanjana</td>
+          <td>Snake Plant</td>
+          <td><span class="badge bg-success">Delivered</span></td>
+          <td>₹299</td>
+        </tr>
+
+        <tr>
+          <td>#102</td>
+          <td>Rahul</td>
+          <td>Aloe Vera</td>
+          <td><span class="badge bg-warning">Pending</span></td>
+          <td>₹199</td>
+        </tr>
+
+        <tr>
+          <td>#103</td>
+          <td>Riya</td>
+          <td>Money Plant</td>
+          <td><span class="badge bg-info">Shipped</span></td>
+          <td>₹249</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+
+
+<!-- Today Summary + Low Stock -->
+<div class="row mt-4 g-4">
+
+  <!-- Today Summary -->
+  <div class="col-md-6">
+
+    <div class="card shadow-sm">
+
+      <div class="card-header fw-bold">
+        Today Summary
+      </div>
+
+      <div class="card-body">
+
+        <div class="row text-center">
+
+          <div class="col-md-6">
+            <h6 class="text-muted">Today Orders</h6>
+            <h3 class="text-primary">18</h3>
+          </div>
+
+          <div class="col-md-6">
+            <h6 class="text-muted">Today Revenue</h6>
+            <h3 class="text-success">₹4,500</h3>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Low Stock Alerts -->
+  <div class="col-md-6">
+
+    <div class="card shadow-sm">
+
+      <div class="card-header fw-bold text-danger">
+        Low Stock Alerts
+      </div>
+
+      <div class="card-body">
+
+        <ul class="list-group">
+
+          <li class="list-group-item d-flex justify-content-between">
+            Aloe Vera
+            <span class="badge bg-danger">5 left</span>
+          </li>
+
+          <li class="list-group-item d-flex justify-content-between">
+            Snake Plant
+            <span class="badge bg-danger">3 left</span>
+          </li>
+
+          <li class="list-group-item d-flex justify-content-between">
+            Peace Lily
+            <span class="badge bg-danger">2 left</span>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- Top Selling Plants -->
+<div class="card shadow-sm mt-4">
+
+  <div class="card-header fw-bold">
+    Top Selling Plants
+  </div>
+
+  <div class="card-body">
+
+    <table class="table table-hover">
+
+      <thead class="table-light">
+        <tr>
+          <th>Plant</th>
+          <th>Sold</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>Snake Plant</td>
+          <td>120</td>
+          <td><span class="badge bg-success">Best Seller</span></td>
+        </tr>
+
+        <tr>
+          <td>Money Plant</td>
+          <td>95</td>
+          <td><span class="badge bg-primary">Popular</span></td>
+        </tr>
+
+        <tr>
+          <td>Aloe Vera</td>
+          <td>80</td>
+          <td><span class="badge bg-warning text-dark">Trending</span></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</div>

@@ -1,0 +1,69 @@
+<!-- ================= HEADER ================= -->
+
+<nav class="navbar navbar-light bg-white shadow-sm px-3">
+
+  <!-- HAMBURGER BUTTON -->
+  <button class="btn btn-outline-secondary me-3"
+          (click)="toggleSidebar()">
+    ☰
+  </button>
+
+  <span class="navbar-brand fw-bold text-success">
+    GreenNest Admin
+  </span>
+
+</nav>
+
+
+<div class="d-flex">
+
+  <!-- ================= SIDEBAR ================= -->
+
+  <div class="sidebar"
+       [class.hide]="isSidebarHidden">
+
+    <h6 class="text-muted px-3 mt-3">MENU</h6>
+
+    <a routerLink="/admin/dashboard" routerLinkActive="active">
+      Dashboard
+    </a>
+
+    <a routerLink="/admin/products" routerLinkActive="active">
+      Products
+    </a>
+
+    <a routerLink="/admin/categories" routerLinkActive="active">
+      Categories
+    </a>
+
+    <a routerLink="/admin/orders" routerLinkActive="active">
+      Orders
+    </a>
+
+    <a routerLink="/admin/users" routerLinkActive="active">
+      Users
+    </a>
+
+    <a routerLink="/admin/login">
+      Logout
+    </a>
+
+  </div>
+
+
+  <!-- ================= MAIN CONTENT ================= -->
+
+  <div class="content-area p-4">
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer text-center py-2">
+   GreenNest Admin Panel
+</footer>

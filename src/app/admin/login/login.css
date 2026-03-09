@@ -1,0 +1,42 @@
+.login-wrapper{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  
+}
+
+.login-card{
+  width:380px;
+  background:white;
+  border-radius:12px;
+  padding:35px;
+}
+
+.login-header h2{
+  font-weight:700;
+  color:#2e7d32;
+}
+
+.login-header p{
+  color:gray;
+  font-size:14px;
+}
+
+.input-group-text{
+  background:#f5f5f5;
+}
+
+.login-btn{
+  background:#2e7d32;
+  color:white;
+  font-weight:600;
+  padding:10px;
+  border-radius:8px;
+  transition:0.3s;
+}
+
+.login-btn:hover{
+  background:#1b5e20;
+}
