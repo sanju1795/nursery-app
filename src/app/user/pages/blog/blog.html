@@ -1,0 +1,40 @@
+<div class="container mt-5">
+
+<h2 class="text-center mb-5">
+Latest Gardening Blogs
+</h2>
+
+<div class="row align-items-center mb-5"
+*ngFor="let blog of blogs; let i = index">
+
+<!-- IMAGE -->
+
+<div class="col-md-6"
+[ngClass]="{'order-md-2': i % 2 != 0}">
+
+<img [src]="blog.image" class="blog-img">
+
+</div>
+
+<!-- TEXT -->
+
+<div class="col-md-6"
+[ngClass]="{'order-md-1': i % 2 != 0}">
+
+<h3>{{blog.title}}</h3>
+
+<p>
+{{blog.description}}
+</p>
+
+<a
+[routerLink]="['/blog-details', blog.id]"
+class="btn btn-success">
+Read Full Blog
+</a>
+
+</div>
+
+</div>
+
+</div>

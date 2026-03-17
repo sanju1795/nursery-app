@@ -1,0 +1,18 @@
+.blog-img{
+width:100%;
+height:320px;
+object-fit:cover;
+border-radius:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+h3{
+font-weight:600;
+margin-bottom:15px;
+}
+
+p{
+font-size:16px;
+line-height:1.8;
+color:#555;
+}

@@ -1,0 +1,60 @@
+.navbar-brand {
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  font-weight: 500;
+  margin-right: 10px;
+  position: relative;
+}
+
+.nav-hover::after{
+  content:"";
+  position:absolute;
+  width:0%;
+  height:2px;
+  left:0;
+  bottom:0;
+  background:white;
+  transition:0.3s;
+}
+
+.nav-hover:hover::after{
+  width:100%;
+}
+
+.search-box input{
+  border-radius:20px;
+  padding:6px 15px;
+  border:none;
+}
+
+.cart-btn{
+  font-size:18px;
+  border-radius:50%;
+  padding:8px 12px;
+}
+
+.login-btn{
+  border-radius:20px;
+  padding:6px 18px;
+}
+
+@media (max-width: 991px){
+
+.search-box{
+  margin-top:10px;
+}
+
+.login-btn{
+  margin-top:10px;
+}
+
+.navbar{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+}
