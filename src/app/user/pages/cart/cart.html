@@ -1,0 +1,55 @@
+<div class="container mt-4">
+
+<h2 class="mb-4">🛒 Your Cart</h2>
+
+<div *ngIf="cartService.getCartItems().length === 0">
+<p>Your cart is empty</p>
+</div>
+
+<div 
+class="card mb-3"
+*ngFor="let item of cartService.getCartItems(); let i = index"
+>
+
+<div class="row g-0">
+
+<div class="col-md-3">
+<img [src]="item.image" class="img-fluid">
+</div>
+
+<div class="col-md-6 p-3">
+
+<h5>{{item.name}}</h5>
+<p class="text-success">₹{{item.price}}</p>
+
+</div>
+
+<div class="col-md-3 d-flex align-items-center justify-content-center">
+
+<button 
+class="btn btn-danger"
+(click)="removeItem(i)">
+Remove
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="text-end">
+
+<h4>
+Total: ₹{{cartService.getTotalPrice()}}
+</h4>
+
+<button class="btn btn-success mt-2"  routerLink="/checkout">
+Checkout
+</button>
+
+</div>
+
+</div>

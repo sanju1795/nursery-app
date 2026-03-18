@@ -1,0 +1,104 @@
+<div class="container plant-details mt-5" *ngIf="plant">
+
+  <div class="row">
+
+    <!-- LEFT : Main Image -->
+    <div class="col-md-6">
+
+      <div class="main-image">
+        <img [src]="selectedImage || plant.image" class="img-fluid shadow rounded">
+      </div>
+
+    </div>
+
+    <!-- RIGHT : Plant Info -->
+    <div class="col-md-6 plant-info">
+
+      <h2 class="plant-title">
+        {{plant.name}}
+      </h2>
+
+      <p class="text-muted">
+        Category : {{plant.category}}
+      </p>
+
+      <h3 class="price text-success">
+        ₹{{plant.price}}
+      </h3>
+
+      <p class="description mt-3">
+        This beautiful plant improves air quality and is perfect for home decoration.
+        It is easy to maintain and suitable for beginners.
+      </p>
+
+      <!-- Quantity Selector -->
+      <div class="qty-box d-flex align-items-center mt-3">
+
+        <button class="btn btn-outline-success"
+        (click)="decreaseQty()">-</button>
+
+        <span class="mx-3 fs-5">
+          {{quantity}}
+        </span>
+
+        <button class="btn btn-outline-success"
+        (click)="increaseQty()">+</button>
+
+      </div>
+
+      <!-- Buttons -->
+      <div class="action-buttons mt-4">
+
+        <button class="btn btn-success me-3"
+        (click)="addToCart()">
+          Add to Cart
+        </button>
+
+        <button class="btn btn-outline-success">
+          Buy Now
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- RELATED PLANTS SECTION -->
+
+<div class="container related mt-5" *ngIf="relatedPlants.length">
+
+  <h3 class="mb-4">Related Plants</h3>
+
+  <div class="row">
+
+    <div class="col-md-3 mb-4"
+    *ngFor="let plant of relatedPlants">
+
+      <div class="card related-card shadow-sm h-100"
+          [routerLink]="['/plant', plant.id]">
+
+        <img
+        [src]="plant.image"
+        class="card-img-top">
+
+        <div class="card-body text-center">
+
+          <h6>{{plant.name}}</h6>
+
+          <p class="text-success">
+            ₹{{plant.price}}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

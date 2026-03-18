@@ -1,0 +1,244 @@
+<!-- 🌿 HERO SECTION -->
+<div class="hero">
+
+  <!-- <img src="assets/images/background-image.png" class="hero-img"> -->
+
+  <div class="hero-content">
+    <h1>Welcome to GreenNest Nursery 🌱</h1>
+    <p>Fresh Plants Delivered to Your Doorstep</p>
+    <a routerLink="/plants" class="btn btn-success btn-lg mt-3">
+      Shop Now
+    </a>
+  </div>
+
+</div>
+
+<!-- SLIDER SECTION -->
+
+<div class="slider-container">
+
+<div class="slider">
+
+<div
+class="slide"
+*ngFor="let slide of slides; let i=index"
+[class.active]="i === currentSlide"
+>
+
+<img [src]="slide.image">
+
+<div class="slide-content">
+
+<h2>{{slide.title}}</h2>
+
+<p>{{slide.subtitle}}</p>
+
+<button class="btn btn-success">
+Shop Now
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BUTTONS -->
+
+<button class="prev" (click)="prevSlide()">❮</button>
+<button class="next" (click)="nextSlide()">❯</button>
+
+
+<!-- INDICATORS -->
+
+<div class="dots">
+
+<span
+*ngFor="let slide of slides; let i=index"
+[class.active]="i === currentSlide"
+(click)="currentSlide=i"
+></span>
+
+</div>
+
+</div>
+
+
+<!-- 🌿 FEATURED SECTION -->
+<section class="container mt-5">
+  <h2 class="text-center mb-4">🌟 Featured Categories</h2>
+
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <h4>🌸 Flowering Plants</h4>
+        <p>Beautiful flowers to brighten your home.</p>
+        <button [routerLink]="['/plants']" [queryParams]="{ category: 'Flowering' }">Explore</button>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <h4>🌿 Indoor Plants</h4>
+        <p>Perfect plants for your living space.</p>
+        <button [routerLink]="['/plants']" [queryParams]="{ category: 'Indoor' }">Explore</button>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <h4>🌳 Outdoor Plants</h4>
+        <p>Strong and healthy garden plants.</p>
+        <button [routerLink]="['/plants']" [queryParams]="{ category: 'Outdoor' }">Explore</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 🌿 POPULAR PLANTS -->
+<section class="container mt-5">
+  <h2 class="text-center mb-4">🌱 Popular Plants</h2>
+
+  <div class="row">
+
+    <div class="col-md-3 mb-4">
+      <div class="card plant-card shadow">
+        <img src="../assets/images/snake plant.jpg"
+             class="card-img-top">
+        <div class="card-body text-center">
+          <h5 class="card-title">Snake Plant</h5>
+          <p class="text-success fw-bold">₹250</p>
+         <button class="btn btn-success w-100"
+            (click)="addToCart(plants[0])">
+              Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="card plant-card shadow">
+        <img src="../assets/images/alovera.jpg"
+             class="card-img-top">
+        <div class="card-body text-center">
+          <h5 class="card-title">Aloe Vera</h5>
+          <p class="text-success fw-bold">₹180</p>
+          <button class="btn btn-success w-100"
+            (click)="addToCart(plants[1])">
+               Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="card plant-card shadow">
+        <img src="../assets/images/money-plant.png"
+             class="card-img-top">
+        <div class="card-body text-center">
+          <h5 class="card-title">Money Plant</h5>
+          <p class="text-success fw-bold">₹200</p>
+          <button class="btn btn-success w-100"
+            (click)="addToCart(plants[2])">
+              Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="card plant-card shadow">
+        <img src="../assets/images/peace lilly.jpg"
+             class="card-img-top">
+        <div class="card-body text-center">
+          <h5 class="card-title">Peace Lily</h5>
+          <p class="text-success fw-bold">₹320</p>
+         <button class="btn btn-success w-100"
+          (click)="addToCart(plants[3])">
+            Add to Cart
+        </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 🌿 WHY CHOOSE US -->
+<section class="why-choose-us mt-5">
+
+  <div class="container text-center">
+
+    <h2 class="mb-5">🌿 Why Choose GreenNest</h2>
+
+    <div class="row">
+
+      <div class="col-md-3">
+        <div class="why-card">
+          <div class="icon">🌱</div>
+          <h5>Healthy Plants</h5>
+          <p>We provide fresh and high quality nursery plants.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="why-card">
+          <div class="icon">🚚</div>
+          <h5>Fast Delivery</h5>
+          <p>Plants delivered safely to your doorstep.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="why-card">
+          <div class="icon">💰</div>
+          <h5>Affordable Price</h5>
+          <p>Best quality plants at reasonable prices.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="why-card">
+          <div class="icon">📞</div>
+          <h5>Customer Support</h5>
+          <p>Our team is always ready to help you.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 🌿 FOOTER -->
+<footer class="footer text-white mt-5">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-4">
+        <h4>🌱 GreenNest</h4>
+        <p>
+          Your trusted online plant nursery.
+          Bringing nature closer to your home.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <h5>Contact</h5>
+        <p>Phone: +91 98765 43210</p>
+        <p>Location: Gujarat, India</p>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <p class="text-center mb-0">
+      © 2026 GreenNest Nursery | All Rights Reserved
+    </p>
+  </div>
+</footer>

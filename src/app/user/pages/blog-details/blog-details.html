@@ -1,0 +1,33 @@
+<div class="container blog-details mt-5" *ngIf="blog">
+
+<!-- BLOG IMAGE -->
+
+<div class="text-center mb-4">
+
+<img [src]="blog.image" class="blog-image">
+
+</div>
+
+<!-- BLOG TITLE -->
+
+<h1 class="blog-title text-center">
+{{blog.title}}
+</h1>
+
+<!-- BLOG META -->
+
+<p class="blog-meta text-center">
+GreenNest Nursery • Gardening Guide
+</p>
+
+<!-- BLOG CONTENT -->
+
+<div class="blog-content mt-4">
+
+<p>
+{{blog.content}}
+</p>
+
+</div>
+
+</div>
