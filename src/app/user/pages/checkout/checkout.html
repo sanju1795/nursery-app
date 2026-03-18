@@ -1,0 +1,120 @@
+<div class="container checkout-container">
+
+<h2 class="page-title">Checkout</h2>
+
+<div class="row">
+
+<!-- Shipping Details -->
+
+<div class="col-lg-7">
+
+<div class="card checkout-card">
+
+<h4 class="section-title">Shipping Details</h4>
+
+<form>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Full Name</label>
+<input type="text" class="form-control" placeholder="Enter full name">
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Phone</label>
+<input type="text" class="form-control" placeholder="Enter phone number">
+</div>
+
+</div>
+
+<div class="mb-3">
+<label>Address</label>
+<input type="text" class="form-control" placeholder="Street address">
+</div>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>City</label>
+<input type="text" class="form-control">
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Pincode</label>
+<input type="text" class="form-control">
+</div>
+
+</div>
+
+<div class="mb-3">
+<label>Payment Method</label>
+
+<select class="form-control">
+
+<option>Cash on Delivery</option>
+<option>UPI</option>
+<option>Credit / Debit Card</option>
+
+</select>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- Order Summary -->
+
+<div class="col-lg-5">
+
+<div class="card summary-card">
+
+<h4 class="section-title">Order Summary</h4>
+
+<div
+class="summary-item"
+*ngFor="let item of cartService.getCartItems()"
+>
+
+<img [src]="item.image">
+
+<div class="item-info">
+
+<h6>{{item.name}}</h6>
+
+<p>₹{{item.price}}</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="price-row">
+
+<span>Items</span>
+<span>{{cartService.getCartItems().length}}</span>
+
+</div>
+
+<div class="price-row total">
+
+<span>Total</span>
+<span>₹{{cartService.getTotalPrice()}}</span>
+
+</div>
+
+<button class="btn place-order-btn" (click)="placeOrder()">
+Place Order
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>

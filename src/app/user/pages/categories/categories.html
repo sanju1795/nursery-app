@@ -1,0 +1,79 @@
+<div class="container mt-4">
+
+  <!-- SORT OPTIONS -->
+  <div class="row mb-4">
+
+    <!-- Sort by Category -->
+    <div class="col-md-3">
+
+      <select
+        class="form-select"
+        [(ngModel)]="selectedCategory"
+      >
+
+        <option *ngFor="let cat of categories" [value]="cat">
+          Category : {{cat}}
+        </option>
+
+      </select>
+
+    </div>
+
+    <!-- Sort by Price -->
+    <div class="col-md-3">
+
+      <select
+        class="form-select"
+        [(ngModel)]="sortOption"
+      >
+
+        <option value="">Sort By Price</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- PRODUCTS GRID -->
+  <div class="row">
+
+    <div
+      class="col-md-4 mb-4"
+      *ngFor="let product of filteredProducts"
+    >
+
+      <div
+        class="card product-card shadow-sm h-100"
+        [routerLink]="product.category === 'plants' ? ['/plant', product.id] : null"
+      >
+
+        <img
+          [src]="product.image"
+          class="card-img-top"
+        >
+
+        <div class="card-body text-center">
+
+          <h5>{{product.name}}</h5>
+
+          <p class="text-muted">
+            {{product.category}}
+          </p>
+
+          <h6 class="text-success">
+            ₹{{product.price}}
+          </h6>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
