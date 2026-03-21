@@ -7,10 +7,10 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-categories',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './categories.html',
-  styleUrl: './categories.css'
+  templateUrl: './user-categories.html',
+  styleUrl: './user-categories.css'
 })
-export class CategoriesComponent {
+export class UserCategoriesComponent {
 
   selectedCategory = 'plants';
   sortOption = '';
