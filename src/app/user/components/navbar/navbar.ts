@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CartService } from '../../services/cart';
+import { CartService } from '../../../services/cart.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -14,15 +15,30 @@ import { CartService } from '../../services/cart';
 export class NavbarComponent {
 
   searchText = '';
+  cartCount = 0;
 
   constructor(public cartService: CartService, public router: Router) {}
+ 
+  ngOnInit() {
 
-  searchPlant(){
-    if(this.searchText.trim()){
-      this.router.navigate(['/plants'], {
-        queryParams: { search: this.searchText }
-      });
-    }
-  }
+ this.cartService.loadCartCount(); // 🔥 ADD THIS
+
+  this.cartService.cartCount$.subscribe(count => {
+    this.cartCount = count;
+
+  });
+}
+
+ searchPlant() {
+
+  console.log("Search value:", this.searchText);
+
+  if (!this.searchText?.trim()) return;
+
+  this.router.navigate(['/user-categories'], {
+    queryParams: { search: this.searchText.trim() }
+  });
+
+}
 
 }

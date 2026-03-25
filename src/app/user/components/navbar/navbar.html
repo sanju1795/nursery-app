@@ -25,21 +25,22 @@
           <a class="nav-link" routerLink="/user-categories">Categories</a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/blog">Blog</a>
-        </li>
+        </li> -->
 
       </ul>
 
       <form class="d-flex me-3" (ngSubmit)="searchPlant()">
 
-        <input
-          type="search"
-          class="form-control"
-          placeholder="Search plants..."
-          [(ngModel)]="searchText"
-          name="search"
-        />
+       <input
+  type="text"
+  name="search"
+  [(ngModel)]="searchText"
+  (keyup.enter)="searchPlant()"
+  placeholder="Search plants..."
+  class="form-control"
+/>
 
       </form>
 
@@ -50,12 +51,10 @@
 
             🛒 Cart
 
-            <span
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-
-              {{cartService.getCartCount()}}
-
-            </span>
+           <span
+  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+  {{ cartCount }}
+</span>   
 
           </a>
         </li>

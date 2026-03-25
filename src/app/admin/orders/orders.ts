@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-orders',
@@ -7,15 +8,47 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './orders.html'
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit {
 
-  orders = [
-    { id:101, customer:'Rahul', product:'Money Plant', amount:250, status:'Pending' },
-    { id:102, customer:'Priya', product:'Rose Plant', amount:180, status:'Shipped' },
-    { id:103, customer:'Amit', product:'Aloe Vera', amount:120, status:'Delivered' }
-  ];
+  orders:any[] = [];
+
+  constructor(
+    private service: OrderService,
+    private cdr: ChangeDetectorRef
+  ){}
+
+  ngOnInit(){
+    this.loadOrders();
+  }
+
+  loadOrders(){
+    this.service.getOrders().subscribe({
+      next: (res:any)=>{
+        console.log("ORDERS:", res);
+
+        this.orders = res || [];
+
+        // 🔥 IMPORTANT FIX
+        this.cdr.detectChanges();
+      },
+      error: (err)=>{
+        console.error("ERROR:", err);
+      }
+    });
+  }
 
   markDelivered(order:any){
-    order.status = 'Delivered';
+    const updated = { ...order, status: 'Delivered' };
+
+    this.service.updateOrder(order._id, updated).subscribe(()=>{
+      order.status = 'Delivered';
+
+      // 🔥 instant UI update
+      this.cdr.detectChanges();
+    });
   }
+
+  trackById(index:any, item:any){
+  return item._id;
+}
 }

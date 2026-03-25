@@ -1,40 +1,46 @@
+<div class="container mt-4">
+
+  <!-- ✅ ADD BLOG FORM -->
+  <h3>Add Blog</h3>
+
+  <input [(ngModel)]="blog.title" placeholder="Title" class="form-control mb-2">
+  <input [(ngModel)]="blog.image" placeholder="Image URL" class="form-control mb-2">
+  <input [(ngModel)]="blog.author" placeholder="Author" class="form-control mb-2">
+
+  <textarea [(ngModel)]="blog.content" placeholder="Content" class="form-control mb-2"></textarea>
+
+  <button class="btn btn-success mb-4" (click)="addBlog()">
+    Post Blog
+  </button>
+
+</div>
+
+
+<!-- ✅ BLOG LIST -->
 <div class="container mt-5">
 
-<h2 class="text-center mb-5">
-Latest Gardening Blogs
-</h2>
+  <h2 class="text-center mb-4">📝 Blogs</h2>
 
-<div class="row align-items-center mb-5"
-*ngFor="let blog of blogs; let i = index">
+  <div class="row">
 
-<!-- IMAGE -->
+    <div class="col-md-4 mb-4" *ngFor="let blog of blogs">
 
-<div class="col-md-6"
-[ngClass]="{'order-md-2': i % 2 != 0}">
+      <div class="card shadow h-100"
+           [routerLink]="['/blog', blog._id]"
+           style="cursor:pointer;">
 
-<img [src]="blog.image" class="blog-img">
+        <img [src]="blog.image" class="card-img-top"
+             style="height:200px; object-fit:cover;">
 
-</div>
+        <div class="card-body">
+          <h5>{{ blog.title }}</h5>
+          <p class="text-muted">{{ blog.author }}</p>
+        </div>
 
-<!-- TEXT -->
+      </div>
 
-<div class="col-md-6"
-[ngClass]="{'order-md-1': i % 2 != 0}">
+    </div>
 
-<h3>{{blog.title}}</h3>
-
-<p>
-{{blog.description}}
-</p>
-
-<a
-[routerLink]="['/blog-details', blog.id]"
-class="btn btn-success">
-Read Full Blog
-</a>
-
-</div>
-
-</div>
+  </div>
 
 </div>

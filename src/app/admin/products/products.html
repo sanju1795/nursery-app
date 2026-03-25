@@ -1,6 +1,5 @@
 <div class="container-fluid">
 
-  <!-- PAGE TITLE -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold">Products</h2>
 
@@ -9,8 +8,9 @@
     </button>
   </div>
 
+  <!-- DEBUG -->
+  <p>Total Products: {{ products.length }}</p>
 
-  <!-- PRODUCT TABLE -->
   <div class="card shadow-sm border-0">
     <div class="card-body">
 
@@ -20,7 +20,7 @@
           <tr>
             <th>#</th>
             <th>Image</th>
-            <th>Product Name</th>
+            <th>Name</th>
             <th>Price</th>
             <th>Stock</th>
             <th>Action</th>
@@ -29,28 +29,25 @@
 
         <tbody>
 
-          <tr *ngFor="let product of products; let i = index">
-            <td>{{ i + 1 }}</td>
+          @for (product of products; track product._id) {
+            <tr>
+              <td>{{$index + 1}}</td>
 
-            <td>
-              <img [src]="product.image" width="50" height="50" class="rounded">
-            </td>
+              <td>
+                <img [src]="product.image || 'https://via.placeholder.com/50'" width="50">
+              </td>
 
-            <td>{{ product.name }}</td>
-            <td>₹{{ product.price }}</td>
-            <td>{{ product.stock }}</td>
+              <td>{{ product.name }}</td>
+              <td>₹{{ product.price }}</td>
+              <td>{{ product.stock }}</td>
 
-            <td>
-              <button class="btn btn-sm btn-primary me-2">
-                Edit
-              </button>
-
-              <button class="btn btn-sm btn-danger" (click)="deleteProduct(i)">
-                Delete
-              </button>
-            </td>
-
-          </tr>
+              <td>
+                <button class="btn btn-sm btn-danger" (click)="deleteProduct(product._id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
 
         </tbody>
 
@@ -62,52 +59,64 @@
 </div>
 
 
-<!-- ADD PRODUCT MODAL -->
+<!-- MODAL -->
 
 <div class="modal fade" id="addProductModal">
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Add Product</h5>
-        <button class="btn-close" data-bs-dismiss="modal">Add</button>
-      </div>
+      <form (ngSubmit)="addProduct()">
 
-      <div class="modal-body">
-
-        <div class="mb-3">
-          <label>Product Name</label>
-          <input type="text" class="form-control" [(ngModel)]="newProduct.name">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Product</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <div class="mb-3">
-          <label>Price</label>
-          <input type="number" class="form-control" [(ngModel)]="newProduct.price">
+        <div class="modal-body">
+
+          <input type="text" class="form-control mb-2" placeholder="Name"
+            [(ngModel)]="newProduct.name" name="name">
+
+          <input type="number" class="form-control mb-2" placeholder="Price"
+            [(ngModel)]="newProduct.price" name="price">
+
+          <input type="number" class="form-control mb-2" placeholder="Stock"
+            [(ngModel)]="newProduct.stock" name="stock">
+
+          <select class="form-control mb-2"
+  [(ngModel)]="newProduct.category"
+  name="category">
+
+  <option value="">Select Category</option>
+  <option value="Indoor">Indoor plants</option>
+  <option value="Outdoor">Outdoor plants</option>
+  <option value="Seeds">Seeds</option>
+
+</select>
+
+<select class="form-control mb-2"
+  [(ngModel)]="newProduct.type"
+  name="type" aria-placeholder="Select Type">
+
+  <option value="">Select Type</option>
+  <option value="Plants">Plants</option>
+  <option value="Planters">Planters</option>
+  <option value="Fertilizers">Fertilizers</option>
+
+</select>
+          <input type="text" class="form-control mb-2" placeholder="Description"
+            [(ngModel)]="newProduct.description" name="description">
+          <input type="text" class="form-control mb-2" placeholder="Image URL"
+            [(ngModel)]="newProduct.image" name="image">
+
         </div>
 
-        <div class="mb-3">
-          <label>Stock</label>
-          <input type="number" class="form-control" [(ngModel)]="newProduct.stock">
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success">Save</button>
         </div>
 
-        <div class="mb-3">
-          <label>Image URL</label>
-          <input type="text" class="form-control" [(ngModel)]="newProduct.image">
-        </div>
-
-      </div>
-
-      <div class="modal-footer">
-
-        <button class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
-        </button>
-
-        <button class="btn btn-success" (click)="addProduct()" data-bs-dismiss="modal">
-          Save Product
-        </button>
-
-      </div>
+      </form>
 
     </div>
   </div>

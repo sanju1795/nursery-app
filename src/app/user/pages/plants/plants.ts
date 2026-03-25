@@ -1,78 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { PlantService } from '../../services/plant';
+import { RouterLink } from '@angular/router';
+import { ProductService } from '../../../services/product.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-plants',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './plants.html',
-  styleUrl: './plants.css'
+  styleUrls: ['./plants.css']
 })
-export class PlantsComponent {
+export class PlantsComponent implements OnInit {
 
-plants: any[] = [];
-searchText: string = '';
+  plants: any[] = [];
 
-selectedCategory:string='All';
+  constructor(private productService: ProductService, private cdRef: ChangeDetectorRef) {}
 
-categories=[
-  'All',
-  'Indoor',
-  'Outdoor',
-  'Flowering',
-  'Medicinal'
-];
+ ngOnInit() {
+    this.loadPlants();
+      console.log("Plants component loaded");  // 👈 check this
 
-constructor(
-  private plantService:PlantService,
-  private route: ActivatedRoute
-){}
+}
 
-ngOnInit(){
-
-  this.plants = this.plantService.getPlants();
-
-  this.route.queryParams.subscribe(params => {
-
-    const category = params['category'];
-    const search = params['search'];
-
-    if(category){
-      this.selectedCategory = category;
-    }
-
-      if(search){
-    this.searchText = search;    }
-
-
+loadPlants() {
+  this.productService.getPlants().subscribe((res: any) => {
+    this.plants = res;
+    console.log("Plants loaded:", this.plants);
+    this.cdRef.detectChanges();
   });
-
 }
-
-get filteredPlants(){
-
-  let filtered = this.plants;
-
-  // category filter
-  if(this.selectedCategory !== 'All'){
-    filtered = filtered.filter(
-      plant => plant.category === this.selectedCategory
-    );
-  }
-
-  // search filter
-  if(this.searchText){
-    filtered = filtered.filter(
-      plant => plant.name.toLowerCase().includes(this.searchText.toLowerCase())
-    );
-  }
-
-  return filtered;
-
-}
-
-
 }

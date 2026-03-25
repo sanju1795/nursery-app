@@ -1,30 +1,49 @@
 <div class="container-fluid">
 
-  <h2 class="fw-bold mb-4">Users</h2>
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Users</h2>
 
+    <button class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#userModal">
+      + Add User
+    </button>
+  </div>
+
+  <!-- TABLE CARD -->
   <div class="card shadow-sm border-0">
     <div class="card-body">
 
       <table class="table table-hover align-middle">
 
+        <!-- TABLE HEADER -->
         <thead class="table-light">
           <tr>
             <th>#</th>
             <th>Full Name</th>
             <th>Email</th>
+            <th width="120">Action</th>
           </tr>
         </thead>
 
+        <!-- TABLE BODY -->
         <tbody>
 
           <tr *ngFor="let user of users; let i=index">
-
+            
             <td>{{i+1}}</td>
 
             <td>{{user.name}}</td>
-
+            
             <td>{{user.email}}</td>
 
+            <td>
+              <button class="btn btn-danger btn-sm"
+                (click)="deleteUser(user._id)">
+                Delete
+              </button>
+            </td>
           </tr>
 
         </tbody>

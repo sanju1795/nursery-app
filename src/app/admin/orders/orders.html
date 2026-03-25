@@ -9,7 +9,7 @@
 
         <thead class="table-light">
           <tr>
-            <th>Order ID</th>
+            <th>#</th>
             <th>Customer</th>
             <th>Product</th>
             <th>Amount</th>
@@ -20,11 +20,12 @@
 
         <tbody>
 
-          <tr *ngFor="let order of orders">
-            <td>#{{order.id}}</td>
-            <td>{{order.customer}}</td>
-            <td>{{order.product}}</td>
-            <td>₹{{order.amount}}</td>
+          <tr *ngFor="let order of orders; let i=index; trackBy: trackById">
+            <td>{{i+1}}</td>
+
+            <td>{{order.customerName}}</td>
+            <td>{{order.productName}}</td>
+            <td>₹{{order.totalPrice}}</td>
 
             <td>
               <span class="badge"

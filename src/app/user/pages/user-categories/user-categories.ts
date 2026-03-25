@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-categories',
@@ -10,53 +11,72 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './user-categories.html',
   styleUrl: './user-categories.css'
 })
-export class UserCategoriesComponent {
+export class UserCategoriesComponent implements OnInit {
 
-  selectedCategory = 'plants';
+  // 🔥 ADD THIS
+  searchText: string = '';
+
+  selectedCategory = '';
   sortOption = '';
 
-  categories = [
-    'plants',
-    'seeds',
-    'tools',
-    'fertilizers'
-  ];
+  categories: string[] = [];
+  products: any[] = [];
 
-  products = [
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute   // ✅ FIX 1
+  ) {}
 
-    { id:1, name:'Snake Plant', category:'plants', price:299, image:'assets/images/snake plant.jpg' },
-    { id:2, name:'Money Plant', category:'plants', price:199, image:'assets/images/money-plant.png' },
-    { id:3, name:'Rose Plant', category:'plants', price:249, image:'assets/images/rose.png' },
-    { id:4, name:'Tulsi Plant', category:'plants', price:149, image:'assets/images/tulsi-plant.png' },
-    { id:5, name:'Aloe Vera', category:'plants', price:199, image:'assets/images/alovera.jpg' },
+  ngOnInit(): void {
+    this.getProducts();
 
-    { id:6, name:'Sunflower Seeds', category:'seeds', price:49, image:'assets/images/sunflower-seeds.png' },
-    { id:7, name:'Rose Seeds', category:'seeds', price:99, image:'assets/images/rose-seeds.png' },
+    // ✅ FIX 2
+    this.route.queryParams.subscribe((params: any) => {
+      this.searchText = params['search'] || '';
+      this.selectedCategory = params['category'] || '';
+    });
+  }
 
-    { id:8, name:'Watering Can', category:'tools', price:199, image:'assets/images/watering-can.png' },
-    { id:9, name:'Pruning Scissors', category:'tools', price:99, image:'assets/images/cutter.png' },
+  getProducts() {
+    this.productService.getProducts().subscribe((res: any) => {
 
-    { id:10, name:'Organic Fertilizer', category:'fertilizers', price:149, image:'assets/images/organic-fertilizer.png' },
-    { id:11, name:'Chemical Fertilizer', category:'fertilizers', price:99, image:'assets/images/chemical-fertilizer.png' }
+      this.products = Array.isArray(res) ? res : res.data;
 
-  ];
+      // categories dynamic
+      this.categories = ['All', ...new Set(this.products.map(p => p.category))];
 
-  get filteredProducts(){
+    });
+  }
 
-    let filtered = this.products.filter(
-      product => product.category === this.selectedCategory
-    );
+  // 🔥 FINAL FILTER LOGIC
+  get filteredProducts() {
 
-    if(this.sortOption === 'low'){
-      filtered = filtered.sort((a,b)=>a.price-b.price);
+    let filtered = this.products;
+
+    // ✅ CATEGORY FILTER
+    if (this.selectedCategory && this.selectedCategory !== 'All') {
+      filtered = filtered.filter(p =>
+        p.category?.toLowerCase() === this.selectedCategory.toLowerCase()
+      );
     }
 
-    if(this.sortOption === 'high'){
-      filtered = filtered.sort((a,b)=>b.price-a.price);
+    // ✅ SEARCH FILTER
+    if (this.searchText) {
+      filtered = filtered.filter(p =>
+        p.name?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+
+    // ✅ SORT
+    if (this.sortOption === 'low') {
+      filtered = filtered.sort((a, b) => a.price - b.price);
+    }
+
+    if (this.sortOption === 'high') {
+      filtered = filtered.sort((a, b) => b.price - a.price);
     }
 
     return filtered;
-
   }
 
 }

@@ -1,21 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart';
-import { RouterLink } from '@angular/router';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule],
   templateUrl: './cart.html',
-  styleUrl: './cart.css'
+  styleUrls: ['./cart.css']
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
 
-  constructor(public cartService:CartService){}
+  cartItems: any[] = [];
+  total = 0;
 
-  removeItem(index:number){
-    this.cartService.removeItem(index);
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.loadCart();
   }
 
+ loadCart() {
+  this.cartService.getCart().subscribe((res: any) => {
+
+    if (!res || !res.items) {
+      this.cartItems = [];
+      this.total = 0;
+      return;
+    }
+
+    this.cartItems = res.items;
+    this.calculateTotal();
+
+  });
+}
+
+  removeItem(id: string) {
+    this.cartService.removeItem(id).subscribe(() => {
+      this.loadCart();
+    });
+  }
+
+  calculateTotal() {
+    this.total = this.cartItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+  }
 }

@@ -1,4 +1,7 @@
 <div class="container mt-4">
+  <div *ngIf="filteredProducts.length === 0" class="text-center mt-5">
+  <h4>No products found 😔</h4>
+</div>
 
   <!-- SORT OPTIONS -->
   <div class="row mb-4">
@@ -10,7 +13,7 @@
         class="form-select"
         [(ngModel)]="selectedCategory"
       >
-
+        <option value="">Filter By Category</option>
         <option *ngFor="let cat of categories" [value]="cat">
           Category : {{cat}}
         </option>
@@ -48,12 +51,10 @@
 
       <div
         class="card product-card shadow-sm h-100"
-        [routerLink]="product.category === 'plants' ? ['/plant', product.id] : null"
-      >
+[routerLink]="product.category === 'plants' ? ['/plant', product._id] : null" >
 
         <img
-          [src]="product.image"
-          class="card-img-top"
+[src]="product.image?.includes('http') ? product.image : 'http://localhost:3000/' + product.image"          class="card-img-top"
         >
 
         <div class="card-body text-center">
