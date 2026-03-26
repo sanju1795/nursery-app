@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../../services/cart.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -16,10 +17,15 @@ export class CartComponent implements OnInit {
   cartItems: any[] = [];
   totalAmount: number = 0;
 
-  constructor(private cartService: CartService,  private cdRef: ChangeDetectorRef   // 👈 add
+  constructor(private cartService: CartService,  private cdRef: ChangeDetectorRef ,private router: Router 
 ) {}
 
   ngOnInit() {
+      if (!localStorage.getItem('user')) {
+    alert("Login required 🔐");
+    this.router.navigate(['/login']);
+    return;
+  }
     this.loadCart();
   }
 

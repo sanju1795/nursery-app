@@ -34,6 +34,12 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
 
+     if (!localStorage.getItem('user')) {
+    alert("Please login first 🔐");
+    this.router.navigate(['/login']);
+    return;
+  }
+
     // ✅ 1. Buy Now check karo
     const buyNow = localStorage.getItem('buyNow');
 

@@ -58,3 +58,48 @@
 }
 
 }
+
+.login-btn {
+  background: white;
+  color: #28a745;           
+  border: 2px solid #28a745;
+  padding: 8px 20px;
+  border-radius: 6px;       
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 15px;
+}
+
+/* 🔥 Hover effect */
+.login-btn:hover {
+  background: #28a745;      
+  color: white;
+}
+
+/* 🔥 Click effect */
+.login-btn:active {
+  transform: scale(0.95);
+}
+
+.user{
+  display: inline-block;
+  background: #ffffff;
+  color: #28a745;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 2px solid #28a745;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 20px;
+}
+.user:hover {
+  background: #28a745;
+  color: white;
+}
+
+.user:active {
+  transform: scale(0.95);
+}
+

@@ -39,7 +39,7 @@ export const routes: Routes = [
       { path: 'cart', component: CartComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
       { path: 'blog/:id', component: BlogDetailsComponent },
-      { path: 'profile', component: ProfileComponent },
+      { path: 'profile', component: ProfileComponent},
       { path: 'order-success', component: OrderSuccessComponent },
       { path: 'login', component: LoginComponent },
       { path: 'plants', component: PlantsComponent },

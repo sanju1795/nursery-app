@@ -14,9 +14,9 @@ export class ProductService {
     return this.http.get(this.baseUrl);
   }
 
-  addProduct(data:any) {
-    return this.http.post(this.baseUrl, data);
-  }
+ addProduct(data:any){
+  return this.http.post('http://localhost:3000/api/products/add', data);
+}
 
   deleteProduct(id:any) {
     return this.http.delete(this.baseUrl + '/' + id);

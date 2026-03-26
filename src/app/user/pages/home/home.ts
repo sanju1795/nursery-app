@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Routes } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { CartService } from '../../../services/cart.service';
 import { ChangeDetectorRef} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +81,15 @@ export class HomeComponent implements OnInit {
       (this.currentSlide - 1 + this.slides.length) % this.slides.length;
   }
 
- addToCart(product: any) {
+addToCart(product: any) {
+
+  const user = localStorage.getItem('user');
+
+  if (!user) {
+    this.router.navigate(['/login']);
+    return;
+  }
+
   this.cartService.addToCart(product).subscribe(() => {
     alert("Added to cart");
   });
