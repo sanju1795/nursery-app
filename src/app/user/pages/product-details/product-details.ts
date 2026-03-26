@@ -5,6 +5,7 @@ import { ProductService } from '../../../services/product.service';
 import { CartService } from '../../../services/cart.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -24,7 +25,8 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private router: Router
   ){}
 
   ngOnInit() {
@@ -60,10 +62,28 @@ export class ProductDetailsComponent implements OnInit {
     if (this.quantity > 1) this.quantity--;
   }
 
-  addToCart(product: any) {
-  this.cartService.addToCart(product).subscribe(() => {
-    console.log("Added to cart");
+addToCart(product: any) {
+  const productWithQty = {
+    ...product,
+    quantity: this.quantity   // 👈 selected quantity add kari
+  };
+
+  this.cartService.addToCart(productWithQty).subscribe(() => {
+    alert("Added to cart ✅");
   });
 }
 
+buyNow() {
+    console.log("BUY NOW CLICKED");  // 👈 add this
+
+  const productWithQty = {
+    ...this.product,
+    quantity: this.quantity
+  };
+
+  // temporary store
+  localStorage.setItem('buyNow', JSON.stringify(productWithQty));
+
+  this.router.navigate(['/checkout']);
+}
 }

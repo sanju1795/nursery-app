@@ -12,6 +12,7 @@ import { OrderSuccessComponent } from './user/pages/order-success/order-success'
 import { CartComponent } from './user/pages/cart/cart';
 import { ProfileComponent } from './user/pages/profile/profile';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
+import { CheckoutComponent } from './user/pages/checkout/checkout';
 
 export const routes: Routes = [
 
@@ -42,8 +43,8 @@ export const routes: Routes = [
       { path: 'order-success', component: OrderSuccessComponent },
       { path: 'login', component: LoginComponent },
       { path: 'plants', component: PlantsComponent },
-      { path: 'user-categories', component: UserCategoriesComponent }
-
+      { path: 'user-categories', component: UserCategoriesComponent },
+      { path: 'checkout', component: CheckoutComponent}
     ]
   }
 ];

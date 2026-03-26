@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-plants',
@@ -30,4 +31,5 @@ loadPlants() {
     this.cdRef.detectChanges();
   });
 }
+
 }

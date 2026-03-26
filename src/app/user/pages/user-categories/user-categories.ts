@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-categories',
@@ -13,10 +15,8 @@ import { ProductService } from '../../../services/product.service';
 })
 export class UserCategoriesComponent implements OnInit {
 
-  // 🔥 ADD THIS
   searchText: string = '';
-
-  selectedCategory = '';
+  selectedType: string = '';   // 🔥 FIX
   sortOption = '';
 
   categories: string[] = [];
@@ -24,56 +24,59 @@ export class UserCategoriesComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute   // ✅ FIX 1
+    private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
 
-    // ✅ FIX 2
     this.route.queryParams.subscribe((params: any) => {
       this.searchText = params['search'] || '';
-      this.selectedCategory = params['category'] || '';
+      this.selectedType = params['type'] || '';
+      this.loadProducts();
     });
   }
 
-  getProducts() {
-    this.productService.getProducts().subscribe((res: any) => {
+  loadProducts() {
 
-      this.products = Array.isArray(res) ? res : res.data;
+    if (this.selectedType) {
+      this.productService.getProductsByType(this.selectedType)
+        .subscribe((res: any) => {
+          this.products = res;
+          this.cdRef.detectChanges();
+        });
 
-      // categories dynamic
-      this.categories = ['All', ...new Set(this.products.map(p => p.category))];
+    } else {
+      this.productService.getProducts()
+        .subscribe((res: any) => {
+          this.products = res;
 
-    });
+          // dynamic categories
+          this.categories = ['All', ...new Set(this.products.map(p => p.type))];
+
+          this.cdRef.detectChanges();
+        });
+    }
   }
 
-  // 🔥 FINAL FILTER LOGIC
   get filteredProducts() {
 
-    let filtered = this.products;
+    let filtered = [...this.products];  // 🔥 FIX (copy)
 
-    // ✅ CATEGORY FILTER
-    if (this.selectedCategory && this.selectedCategory !== 'All') {
-      filtered = filtered.filter(p =>
-        p.category?.toLowerCase() === this.selectedCategory.toLowerCase()
-      );
-    }
-
-    // ✅ SEARCH FILTER
+    // SEARCH
     if (this.searchText) {
       filtered = filtered.filter(p =>
         p.name?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
 
-    // ✅ SORT
+    // SORT
     if (this.sortOption === 'low') {
-      filtered = filtered.sort((a, b) => a.price - b.price);
+      filtered.sort((a, b) => a.price - b.price);
     }
 
     if (this.sortOption === 'high') {
-      filtered = filtered.sort((a, b) => b.price - a.price);
+      filtered.sort((a, b) => b.price - a.price);
     }
 
     return filtered;

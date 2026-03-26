@@ -38,4 +38,7 @@ getPlants() {
   return this.http.get('http://localhost:3000/api/products/plants');
 }
 
+getProductsByType(type: string) {
+  return this.http.get(`http://localhost:3000/api/products/type/${type}`);
+}
 }
