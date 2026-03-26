@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../../services/product.service';
 import { CartService } from '../../../services/cart.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -27,20 +26,23 @@ export class ProductDetailsComponent implements OnInit {
     private cartService: CartService,
     private cdRef: ChangeDetectorRef,
     private router: Router
-  ){}
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.loadProduct(id);
-      console.log( "product loaded with ID:", id);
     });
+  }
+
+  // ✅ check login
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('user');
   }
 
   loadProduct(id: string) {
     this.productService.getProductById(id).subscribe(res => {
       this.product = res;
-
       this.loadRelatedProducts();
     });
   }
@@ -62,28 +64,41 @@ export class ProductDetailsComponent implements OnInit {
     if (this.quantity > 1) this.quantity--;
   }
 
-addToCart(product: any) {
-  const productWithQty = {
-    ...product,
-    quantity: this.quantity   // 👈 selected quantity add kari
-  };
+  // ✅ ADD TO CART
+  addToCart(product: any) {
 
-  this.cartService.addToCart(productWithQty).subscribe(() => {
-    alert("Added to cart ✅");
-  });
-}
+    if (!this.isLoggedIn()) {
+      alert("Please login first 🔐");
+      this.router.navigate(['/login']);
+      return;
+    }
 
-buyNow() {
-    console.log("BUY NOW CLICKED");  // 👈 add this
+    const productWithQty = {
+      ...product,
+      quantity: this.quantity
+    };
 
-  const productWithQty = {
-    ...this.product,
-    quantity: this.quantity
-  };
+    this.cartService.addToCart(productWithQty).subscribe(() => {
+      alert("Added to cart ✅");
+    });
+  }
 
-  // temporary store
-  localStorage.setItem('buyNow', JSON.stringify(productWithQty));
+  // ✅ BUY NOW
+  buyNow() {
 
-  this.router.navigate(['/checkout']);
-}
+    if (!this.isLoggedIn()) {
+      alert("Please login first 🔐");
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const productWithQty = {
+      ...this.product,
+      quantity: this.quantity
+    };
+
+    localStorage.setItem('buyNow', JSON.stringify(productWithQty));
+    this.router.navigate(['/checkout']);
+  }
+
 }

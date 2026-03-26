@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, FormsModule, RouterModule],
+  imports: [RouterLink, FormsModule, RouterModule,CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -17,9 +18,7 @@ export class NavbarComponent {
 
   searchText = '';
   cartCount = 0;
-
-  constructor(public cartService: CartService, public router: Router,   private cdRef: ChangeDetectorRef   // 👈 add this
-) {}
+  user: any = null;
  
 ngOnInit() {
   this.cartService.loadCartCount();   // 👈 ensure latest
@@ -29,6 +28,21 @@ ngOnInit() {
     console.log("cart added");
     this.cdRef.detectChanges();
   });
+}
+
+  constructor(public cartService: CartService, public router: Router,   private cdRef: ChangeDetectorRef   // 👈 add this
+) {
+   // 🔥 ROUTE CHANGE LISTENER
+  this.router.events.subscribe(() => {
+    const data = localStorage.getItem('user');
+    this.user = data ? JSON.parse(data) : null;
+
+    this.cdRef.detectChanges();   // 👈 force update
+  });
+}
+
+goToProfile() {
+  this.router.navigate(['/profile']);
 }
 
  searchPlant() {

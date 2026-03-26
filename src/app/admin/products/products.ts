@@ -47,46 +47,51 @@ export class ProductsComponent implements OnInit {
   // ✅ ADD PRODUCT (UPDATED)
   addProduct(){
 
-    if(!this.newProduct.name || !this.newProduct.price || !this.newProduct.category){
-      alert("Please fill all fields");
-      return;
-    }
+  if(!this.newProduct.name || !this.newProduct.price || !this.newProduct.category){
+    alert("Please fill all fields");
+    return;
+  }
 
-    const formData = new FormData();
+  const productData = {
+    name: this.newProduct.name,
+    price: this.newProduct.price,
+    stock: this.newProduct.stock,
+    category: this.newProduct.category,
+    type: this.newProduct.type,
+    description: this.newProduct.description,
+    image: this.newProduct.image   // 👈 direct path
+  };
 
-    formData.append('name', this.newProduct.name);
-    formData.append('price', this.newProduct.price);
-    formData.append('stock', this.newProduct.stock);
-    formData.append('category', this.newProduct.category); // ✅ IMPORTANT
+  this.productService.addProduct(productData).subscribe({
+    next: (res:any) => {
+      console.log("Saved:", res);
 
-    if(this.selectedFile){
-      formData.append('image', this.selectedFile);
-    }
-
-    this.productService.addProduct(formData).subscribe((res:any) => {
-
-      // 🔥 instant UI update
       this.products.unshift(res);
       this.cdr.detectChanges();
 
-      // reset form
       this.newProduct = {
-        name:'',
-        price:null,
-        stock:null,
-        category:'',
-        image:''
-      };
+  name:'',
+  price:null,
+  stock:null,
+  category:'',
+  type:'',
+  description:'',
+  image:''
+};
 
-      this.selectedFile = null;
+const modalElement = document.getElementById('addProductModal');
+const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
 
-      // close modal
-      const modal = document.getElementById('addProductModal');
-      const modalInstance = (window as any).bootstrap.Modal.getInstance(modal);
-      modalInstance?.hide();
-    });
-
-  }
+if(modal){
+  modal.hide();
+}
+    },
+    error: (err) => {
+      console.log(err);
+      alert("Error saving product");
+    }
+  });
+}
 
   deleteProduct(id:any){
     this.productService.deleteProduct(id).subscribe(() => {
@@ -94,5 +99,6 @@ export class ProductsComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
+
 
 }
