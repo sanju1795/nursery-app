@@ -1,13 +1,14 @@
-.plant-card{
-  cursor:pointer;
-  transition:0.3s;
+.product-card {
+  cursor: pointer;
+  border-radius: 12px;
+  transition: 0.3s;
 }
 
-.plant-card:hover{
-  transform:scale(1.04);
+.product-card:hover {
+  transform: translateY(-5px);
 }
 
-.card img{
-  height:220px;
-  object-fit:cover;
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
 }

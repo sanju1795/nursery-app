@@ -1,0 +1,99 @@
+<div class="container mt-5" *ngIf="product">
+
+  <div class="row">
+
+    <!-- LEFT SIDE -->
+    <div class="col-md-5">
+
+      <div class="image-box shadow-sm p-3">
+        <img [src]="selectedImage || product.image"
+             class="img-fluid main-img">
+
+        <!-- Thumbnails (future ready) -->
+        <div class="thumbs mt-3 d-flex">
+          <img [src]="product.image"
+               (click)="selectedImage = product.image"
+               class="thumb-img">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="col-md-7">
+
+      <h2 class="product-title">{{ product.name }}</h2>
+
+      <p class="text-muted">
+        Category: {{ product.category }}
+      </p>
+
+      <!-- Rating UI -->
+      <div class="mb-2 text-warning">
+        ⭐⭐⭐⭐☆ <span class="text-dark">(120 reviews)</span>
+      </div>
+
+      <!-- Price -->
+      <h3 class="price">₹{{ product.price }}</h3>
+
+      <!-- Description -->
+      <p class="description mt-3">
+        {{ product.description }}
+      </p>
+
+      <!-- Quantity -->
+      <div class="d-flex align-items-center mt-3">
+        <button class="btn btn-outline-success"
+                (click)="decreaseQty()">-</button>
+
+        <span class="mx-3">{{ quantity }}</span>
+
+        <button class="btn btn-outline-success"
+                (click)="increaseQty()">+</button>
+      </div>
+
+      <!-- Buttons -->
+      <div class="mt-4">
+        <button class="btn btn-success me-3"
+                (click)="addToCart(product)">
+          🛒 Add to Cart
+        </button>
+
+        <button class="btn btn-warning text-white" (click)="buyNow()">
+          ⚡ Buy Now
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="container mt-5" *ngIf="relatedProducts.length">
+
+  <h4 class="mb-4">🔥 Related Products</h4>
+
+  <div class="row">
+
+    <div class="col-md-3 mb-4"
+         *ngFor="let item of relatedProducts">
+
+      <div class="card product-card h-100"
+           [routerLink]="['/product', item._id]">
+
+        <img [src]="item.image" class="card-img-top">
+
+        <div class="card-body text-center">
+          <h6>{{ item.name }}</h6>
+          <p class="text-success">₹{{ item.price }}</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

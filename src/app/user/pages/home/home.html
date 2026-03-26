@@ -101,69 +101,41 @@ Shop Now
 <section class="container mt-5">
   <h2 class="text-center mb-4">🌱 Popular Plants</h2>
 
-  <div class="row">
+  <!-- DEBUG --> 
+<div class="row" *ngIf="plants.length > 0">
 
-    <div class="col-md-3 mb-4">
-      <div class="card plant-card shadow">
-        <img src="../assets/images/snake plant.jpg"
-             class="card-img-top">
-        <div class="card-body text-center">
-          <h5 class="card-title">Snake Plant</h5>
-          <p class="text-success fw-bold">₹250</p>
-         <button class="btn btn-success w-100"
-            (click)="addToCart(plants[0])">
-              Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
+    <div class="col-md-3" *ngFor="let plant of plants">
 
-    <div class="col-md-3 mb-4">
       <div class="card plant-card shadow">
-        <img src="../assets/images/alovera.jpg"
-             class="card-img-top">
+
+        <!-- IMAGE -->
+        <img 
+          [src]="'http://localhost:3000/' + plant.image"
+          style="height:200px; width:100%; object-fit:cover;"
+        >
+
         <div class="card-body text-center">
-          <h5 class="card-title">Aloe Vera</h5>
-          <p class="text-success fw-bold">₹180</p>
+
+          <!-- NAME -->
+          <h5 class="card-title">{{ plant.name }}</h5>
+
+          <!-- PRICE -->
+          <p class="text-success fw-bold">₹ {{ plant.price }}</p>
+
+          <!-- BUTTON -->
           <button class="btn btn-success w-100"
-            (click)="addToCart(plants[1])">
-               Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 mb-4">
-      <div class="card plant-card shadow">
-        <img src="../assets/images/money-plant.png"
-             class="card-img-top">
-        <div class="card-body text-center">
-          <h5 class="card-title">Money Plant</h5>
-          <p class="text-success fw-bold">₹200</p>
-          <button class="btn btn-success w-100"
-            (click)="addToCart(plants[2])">
-              Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 mb-4">
-      <div class="card plant-card shadow">
-        <img src="../assets/images/peace lilly.jpg"
-             class="card-img-top">
-        <div class="card-body text-center">
-          <h5 class="card-title">Peace Lily</h5>
-          <p class="text-success fw-bold">₹320</p>
-         <button class="btn btn-success w-100"
-          (click)="addToCart(plants[3])">
+                  (click)="addToCart(plant)">
             Add to Cart
-        </button>
+          </button>
+
         </div>
       </div>
     </div>
 
   </div>
+  <div *ngIf="plants.length === 0" class="text-center text-muted">
+  No plants available
+</div>
 </section>
 
 <!-- 🌿 WHY CHOOSE US -->

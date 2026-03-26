@@ -1,60 +1,23 @@
 <div class="container mt-4">
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-
-    <h2>Our Plants</h2>
-
-    <!-- Category Dropdown Filter -->
-    <div>
-
-      <label class="me-2 fw-bold">Category:</label>
-
-      <select
-        class="form-select d-inline w-auto"
-        [(ngModel)]="selectedCategory"
-      >
-
-        <option *ngFor="let cat of categories" [value]="cat">
-          {{cat}}
-        </option>
-
-      </select>
-
-    </div>
-
-  </div>
-
-
-  <!-- Plant Cards -->
+  <h2 class="mb-4 fw-bold">🌿 Our Plants</h2>
 
   <div class="row">
 
-    <div
-      class="col-md-3 mb-4"
-      *ngFor="let plant of filteredPlants"
-    >
+    <div class="col-md-3 mb-4" *ngFor="let plant of plants">
 
-      <div
-        class="card plant-card shadow-sm h-100"
-        [routerLink]="['/plant', plant.id]"
-      >
+      <div class="card product-card shadow-sm"
+           [routerLink]="['/product', plant._id]">
 
-        <img
-          [src]="plant.image"
-          class="card-img-top"
-        >
+        <img [src]="plant.image" class="card-img-top">
 
         <div class="card-body text-center">
 
-          <h5>{{plant.name}}</h5>
+          <h5>{{ plant.name }}</h5>
 
-          <p class="text-muted">
-            {{plant.category}}
-          </p>
+          <p class="text-muted">{{ plant.category }}</p>
 
-          <h6 class="text-success">
-            ₹{{plant.price}}
-          </h6>
+          <p class="text-success fw-bold">₹{{ plant.price }}</p>
 
         </div>
 

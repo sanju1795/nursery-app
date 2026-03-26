@@ -11,39 +11,19 @@ export const ADMIN_ROUTES: Routes = [
 
   // ✅ login page (without layout)
   {
-    path: 'login',
-    component: Login
+    path: 'login',component: Login
   },
 
   // ✅ layout routes
   {
-    path: '',
-    component: AdminLayoutComponent,
+    path: '', component: AdminLayoutComponent,
     children: [
-      {
-        path: 'dashboard',
-        component: Dashboard
-      },
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
-      },
-      {
-        path: 'products',
-        component: ProductsComponent
-      }
-      ,
-      { path: 'orders',
-        component: OrdersComponent
-      },
-      { path: 'users',
-        component: UsersComponent
-      },
-      {
-        path: 'categories',
-        component: CategoriesComponent
-      }
+      { path: 'dashboard',component: Dashboard },
+      { path: '',redirectTo: 'dashboard',pathMatch: 'full' },
+      { path: 'products',component: ProductsComponent },
+      { path: 'orders',component: OrdersComponent },
+      { path: 'users',component: UsersComponent },
+      { path: 'categories',component: CategoriesComponent }
     ]
   }
 

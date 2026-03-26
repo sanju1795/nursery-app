@@ -1,0 +1,16 @@
+.card {
+  border-radius: 10px;
+}
+
+img {
+  height: 100px;
+  object-fit: cover;
+}
+
+button {
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}

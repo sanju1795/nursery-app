@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart';
+import { CartService } from '../../../services/cart.service';
+import { ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,14 +9,53 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule,RouterLink],
   templateUrl: './cart.html',
-  styleUrl: './cart.css'
+  styleUrls: ['./cart.css']
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
 
-  constructor(public cartService:CartService){}
+  cartItems: any[] = [];
+  totalAmount: number = 0;
 
-  removeItem(index:number){
-    this.cartService.removeItem(index);
+  constructor(private cartService: CartService,  private cdRef: ChangeDetectorRef   // 👈 add
+) {}
+
+  ngOnInit() {
+    this.loadCart();
+  }
+
+  loadCart() {
+    this.cartService.getCart().subscribe((res: any) => {
+      this.cartItems = res.items || [];
+      this.calculateTotal();
+      this.cdRef.detectChanges();
+    });
+  }
+
+  // ➕ Increase quantity
+  increaseQty(item: any) {
+    item.quantity++;
+    this.calculateTotal();
+  }
+
+  // ➖ Decrease quantity
+  decreaseQty(item: any) {
+    if (item.quantity > 1) {
+      item.quantity--;
+      this.calculateTotal();
+    }
+  }
+
+  // ❌ Remove item
+  removeItem(item: any) {
+    this.cartService.removeItem(item.productId).subscribe(() => {
+      this.loadCart();
+    });
+  }
+
+  // 💰 Total
+  calculateTotal() {
+    this.totalAmount = this.cartItems.reduce((sum, item) =>
+      sum + item.price * item.quantity, 0);
   }
 
 }

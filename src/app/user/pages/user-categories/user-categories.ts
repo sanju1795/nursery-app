@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../../services/product.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-categories',
@@ -10,53 +13,73 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './user-categories.html',
   styleUrl: './user-categories.css'
 })
-export class UserCategoriesComponent {
+export class UserCategoriesComponent implements OnInit {
 
-  selectedCategory = 'plants';
+  searchText: string = '';
+  selectedType: string = '';   // 🔥 FIX
   sortOption = '';
 
-  categories = [
-    'plants',
-    'seeds',
-    'tools',
-    'fertilizers'
-  ];
+  categories: string[] = [];
+  products: any[] = [];
 
-  products = [
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef,
+  ) {}
 
-    { id:1, name:'Snake Plant', category:'plants', price:299, image:'assets/images/snake plant.jpg' },
-    { id:2, name:'Money Plant', category:'plants', price:199, image:'assets/images/money-plant.png' },
-    { id:3, name:'Rose Plant', category:'plants', price:249, image:'assets/images/rose.png' },
-    { id:4, name:'Tulsi Plant', category:'plants', price:149, image:'assets/images/tulsi-plant.png' },
-    { id:5, name:'Aloe Vera', category:'plants', price:199, image:'assets/images/alovera.jpg' },
+  ngOnInit(): void {
 
-    { id:6, name:'Sunflower Seeds', category:'seeds', price:49, image:'assets/images/sunflower-seeds.png' },
-    { id:7, name:'Rose Seeds', category:'seeds', price:99, image:'assets/images/rose-seeds.png' },
+    this.route.queryParams.subscribe((params: any) => {
+      this.searchText = params['search'] || '';
+      this.selectedType = params['type'] || '';
+      this.loadProducts();
+    });
+  }
 
-    { id:8, name:'Watering Can', category:'tools', price:199, image:'assets/images/watering-can.png' },
-    { id:9, name:'Pruning Scissors', category:'tools', price:99, image:'assets/images/cutter.png' },
+  loadProducts() {
 
-    { id:10, name:'Organic Fertilizer', category:'fertilizers', price:149, image:'assets/images/organic-fertilizer.png' },
-    { id:11, name:'Chemical Fertilizer', category:'fertilizers', price:99, image:'assets/images/chemical-fertilizer.png' }
+    if (this.selectedType) {
+      this.productService.getProductsByType(this.selectedType)
+        .subscribe((res: any) => {
+          this.products = res;
+          this.cdRef.detectChanges();
+        });
 
-  ];
+    } else {
+      this.productService.getProducts()
+        .subscribe((res: any) => {
+          this.products = res;
 
-  get filteredProducts(){
+          // dynamic categories
+          this.categories = ['All', ...new Set(this.products.map(p => p.type))];
 
-    let filtered = this.products.filter(
-      product => product.category === this.selectedCategory
-    );
+          this.cdRef.detectChanges();
+        });
+    }
+  }
 
-    if(this.sortOption === 'low'){
-      filtered = filtered.sort((a,b)=>a.price-b.price);
+  get filteredProducts() {
+
+    let filtered = [...this.products];  // 🔥 FIX (copy)
+
+    // SEARCH
+    if (this.searchText) {
+      filtered = filtered.filter(p =>
+        p.name?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
     }
 
-    if(this.sortOption === 'high'){
-      filtered = filtered.sort((a,b)=>b.price-a.price);
+    // SORT
+    if (this.sortOption === 'low') {
+      filtered.sort((a, b) => a.price - b.price);
+    }
+
+    if (this.sortOption === 'high') {
+      filtered.sort((a, b) => b.price - a.price);
     }
 
     return filtered;
-
   }
 
 }

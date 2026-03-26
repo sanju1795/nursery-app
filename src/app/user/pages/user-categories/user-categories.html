@@ -1,74 +1,63 @@
 <div class="container mt-4">
 
-  <!-- SORT OPTIONS -->
+  <div *ngIf="filteredProducts.length === 0" class="text-center mt-5">
+    <h4>No products found 😔</h4>
+  </div>
+
+  <!-- FILTERS -->
   <div class="row mb-4">
 
-    <!-- Sort by Category -->
+    <!-- Category -->
     <div class="col-md-3">
-
-      <select
-        class="form-select"
-        [(ngModel)]="selectedCategory"
-      >
-
+      <select class="form-select" [(ngModel)]="selectedType" (change)="loadProducts()">
+        <option value="">All Categories</option>
         <option *ngFor="let cat of categories" [value]="cat">
-          Category : {{cat}}
+          {{cat}}
         </option>
-
       </select>
-
     </div>
 
-    <!-- Sort by Price -->
+    <!-- Sort -->
     <div class="col-md-3">
-
-      <select
-        class="form-select"
-        [(ngModel)]="sortOption"
-      >
-
+      <select class="form-select" [(ngModel)]="sortOption">
         <option value="">Sort By Price</option>
-        <option value="low">Price: Low to High</option>
-        <option value="high">Price: High to Low</option>
-
+        <option value="low">Low → High</option>
+        <option value="high">High → Low</option>
       </select>
-
     </div>
 
   </div>
 
-
-  <!-- PRODUCTS GRID -->
+  <!-- PRODUCTS -->
   <div class="row">
 
-    <div
-      class="col-md-4 mb-4"
-      *ngFor="let product of filteredProducts"
-    >
+    <div class="col-md-4 mb-4"
+         *ngFor="let product of filteredProducts">
 
-      <div
-        class="card product-card shadow-sm h-100"
-        [routerLink]="product.category === 'plants' ? ['/plant', product.id] : null"
-      >
+      <div class="card product-card shadow-sm h-100"
+           [routerLink]="['/product', product._id]">  <!-- 🔥 FIX -->
 
-        <img
+       <img
           [src]="product.image"
           class="card-img-top"
-        >
+          onerror="this.src='https://via.placeholder.com/300x200'"
+>
+<div class="card-body text-center">
 
-        <div class="card-body text-center">
+  <h5>{{product.name}}</h5>
 
-          <h5>{{product.name}}</h5>
+  <p>{{product.category}}</p>
 
-          <p class="text-muted">
-            {{product.category}}
-          </p>
+  <h6 class="text-success">
+    ₹{{product.price}}
+  </h6>
 
-          <h6 class="text-success">
-            ₹{{product.price}}
-          </h6>
+  <!-- NEW BUTTON -->
+  <button class="view-btn">
+    View Product
+  </button>
 
-        </div>
+</div>
 
       </div>
 

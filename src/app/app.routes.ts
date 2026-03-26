@@ -1,15 +1,18 @@
 import { Routes } from '@angular/router';
+import { provideRouter, withRouterConfig } from '@angular/router';
+
 import { HomeComponent } from './user/pages/home/home';
 import { LoginComponent } from './user/pages/login/login';
 import { PlantsComponent } from './user/pages/plants/plants';
 import { UserCategoriesComponent } from './user/pages/user-categories/user-categories';
-import { PlantDetailsComponent } from './user/pages/plant-details/plant-details';
+import { ProductDetailsComponent } from './user/pages/product-details/product-details';
 import { BlogComponent } from './user/pages/blog/blog';
 import { BlogDetailsComponent } from './user/pages/blog-details/blog-details';
 import { OrderSuccessComponent } from './user/pages/order-success/order-success';
 import { CartComponent } from './user/pages/cart/cart';
 import { ProfileComponent } from './user/pages/profile/profile';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
+import { CheckoutComponent } from './user/pages/checkout/checkout';
 
 export const routes: Routes = [
 
@@ -34,15 +37,22 @@ export const routes: Routes = [
       { path: '', component: HomeComponent }, 
       { path: 'blog', component: BlogComponent },
       { path: 'cart', component: CartComponent },
-      { path: 'plant/:id', component: PlantDetailsComponent },
+      { path: 'product/:id', component: ProductDetailsComponent },
       { path: 'blog/:id', component: BlogDetailsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'order-success', component: OrderSuccessComponent },
       { path: 'login', component: LoginComponent },
       { path: 'plants', component: PlantsComponent },
-      { path: 'user-categories', component: UserCategoriesComponent }
-
+      { path: 'user-categories', component: UserCategoriesComponent },
+      { path: 'checkout', component: CheckoutComponent}
     ]
   }
 ];
+export const appConfig = {
+  providers: [
+    provideRouter(routes, withRouterConfig({
+      onSameUrlNavigation: 'reload'   // 🔥 IMPORTANT
+    }))
+  ]
+};
 

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CategoryService } from '../../services/category.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-categories',
@@ -8,30 +10,54 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
   templateUrl: './categories.html'
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit {
 
+  categories:any[] = [];
   categoryName = '';
 
-  categories:any[] = [
-    { id:1, name:'Indoor Plants'},
-    { id:2, name:'Outdoor Plants'},
-    { id:3, name:'Seeds'}
-  ];
+  constructor(private service: CategoryService , private cdr: ChangeDetectorRef){}
 
+  ngOnInit(){
+    this.loadCategories(); // 🔥 always load from DB
+  }
+
+  // 🔥 LOAD FROM DB
+  loadCategories(){
+  this.service.getCategories().subscribe((res:any)=>{
+    console.log("LOADED:", res);
+
+    this.categories = res || [];
+
+    this.cdr.detectChanges(); // 🔥 IMPORTANT FIX
+  });
+}
+
+  // 🔥 ADD CATEGORY
   addCategory(){
 
     if(this.categoryName.trim() === '') return;
 
-    this.categories.push({
-      id: Date.now(),
-      name: this.categoryName
-    });
+    this.service.addCategory({ name: this.categoryName })
+      .subscribe({
+        next: (res:any)=>{
+          console.log("ADDED:", res);
 
-    this.categoryName='';
+          // 🔥 IMPORTANT: reload from DB
+          this.loadCategories();
+
+          this.categoryName = '';
+        },
+        error: (err)=>{
+          console.error("ADD ERROR:", err);
+        }
+      });
   }
 
-  deleteCategory(id:number){
-    this.categories = this.categories.filter(c => c.id !== id);
+  // 🔥 DELETE
+  deleteCategory(id:any){
+    this.service.deleteCategory(id).subscribe(()=>{
+      this.loadCategories(); // 🔥 reload again
+    });
   }
 
 }
