@@ -53,22 +53,30 @@ export class HomeComponent implements OnInit {
  getPlants() {
   this.productService.getProducts().subscribe((res: any) => {
 
-    console.log("API Response:", res);
-
     if (Array.isArray(res)) {
-      this.plants = res;
-    } else if (res.data) {
-      this.plants = res.data;
+
+      // ✅ STEP 1: only plants filter
+      let onlyPlants = res.filter((p: any) => {
+        return p.category && p.category.name?.toLowerCase() === 'plants';
+      });
+
+      console.log("Only Plants:", onlyPlants);
+
+      // ✅ STEP 2: check if orders exist (top selling logic later)
+      // currently fallback → show first 4 plants
+
+      this.plants = onlyPlants.slice(0, 4);
+
     } else {
       this.plants = [];
     }
 
     console.log("Final Plants:", this.plants);
 
-    this.cdRef.detectChanges();   // 👈 VERY IMPORTANT
+    this.cdRef.detectChanges();
 
   }, (err) => {
-    console.error("Error:", err);
+    console.error(err);
   });
 }
 

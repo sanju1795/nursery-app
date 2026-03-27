@@ -24,6 +24,7 @@
           <tr>
             <th>#</th>
             <th>Category Name</th>
+            <th> Type </th>
             <th width="150">Action</th>
           </tr>
         </thead>
@@ -37,12 +38,26 @@
             <td class="fw-semibold">
               {{category.name}}
             </td>
+            <td>
+  <span *ngIf="category.types?.length > 0; else noType">
+    {{ category.types.join(', ') }}
+  </span>
+
+  <ng-template #noType>
+    <span class="text-muted">No Types</span>
+  </ng-template>
+</td>
 
             <td>
-              <button class="btn btn-sm btn-danger"
-                      (click)="deleteCategory(category._id)">
-                Delete
-              </button>
+              <button class="btn btn-sm btn-primary me-2"
+        (click)="openEditModal(category)">
+  Edit
+</button>
+
+<button class="btn btn-sm btn-danger"
+        (click)="deleteCategory(category._id)">
+  Delete
+</button>
             </td>
 
           </tr>
@@ -79,6 +94,10 @@
                placeholder="Enter Category Name"
                [(ngModel)]="categoryName">
 
+               <input type="text"
+       class="form-control mt-2"
+       placeholder="Enter Types (comma separated e.g. Indoor,Outdoor)"
+       [(ngModel)]="categoryTypes">
       </div>
 
 
@@ -96,6 +115,58 @@
         </button>
 
       </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 🔥 EDIT CATEGORY MODAL (AA AHIYA ADD KARVU) -->
+<div class="modal fade" id="editCategoryModal">
+
+<p>console.log("UPDATE WORKING");</p>
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Category</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form (ngSubmit)="updateCategory()">
+
+  <div class="modal-body">
+
+    <input type="text"
+           class="form-control mb-2"
+           placeholder="Category Name"
+           [(ngModel)]="editCategoryName"
+           name="name">
+
+    <input type="text"
+           class="form-control"
+           placeholder="Types (comma separated)"
+           [(ngModel)]="editCategoryTypes"
+           name="types">
+
+  </div>
+
+  <div class="modal-footer">
+
+    <button class="btn btn-secondary"
+            data-bs-dismiss="modal">
+      Cancel
+    </button>
+
+    <button type="submit" class="btn btn-success">
+      Update
+    </button>
+
+  </div>
+
+</form>
 
     </div>
 

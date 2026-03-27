@@ -9,8 +9,8 @@
 
     <!-- Category -->
     <div class="col-md-3">
-      <select class="form-select" [(ngModel)]="selectedType" (change)="loadProducts()">
-        <option value="">All Categories</option>
+      <select class="form-select" [(ngModel)]="selectedcategory" (change)="loadProducts()">
+        <option value="">sort by Categories</option>
         <option *ngFor="let cat of categories" [value]="cat">
           {{cat}}
         </option>
@@ -46,7 +46,7 @@
 
   <h5>{{product.name}}</h5>
 
-  <p>{{product.category}}</p>
+  <p>{{product.category?.name}}</p>
 
   <h6 class="text-success">
     ₹{{product.price}}

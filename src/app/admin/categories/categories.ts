@@ -14,44 +14,67 @@ export class CategoriesComponent implements OnInit {
 
   categories:any[] = [];
   categoryName = '';
+  categoryTypes = '';
+  selectedCategory:any = null;
+  editCategoryName = '';
+  editCategoryTypes = '';
 
   constructor(private service: CategoryService , private cdr: ChangeDetectorRef){}
 
   ngOnInit(){
+    console.log("init called");
     this.loadCategories(); // 🔥 always load from DB
   }
 
   // 🔥 LOAD FROM DB
   loadCategories(){
-  this.service.getCategories().subscribe((res:any)=>{
-    console.log("LOADED:", res);
+  console.log("CALLING API...");   // 🔥 ADD
 
-    this.categories = res || [];
+  this.service.getCategories().subscribe({
+    next:(res:any)=>{
+      console.log("DATA:", res);   // 🔥 ADD
 
-    this.cdr.detectChanges(); // 🔥 IMPORTANT FIX
+      this.categories = res || [];
+      this.cdr.detectChanges();
+    },
+    error:(err)=>{
+      console.log("ERROR:", err);  // 🔥 ADD
+    }
   });
 }
 
   // 🔥 ADD CATEGORY
   addCategory(){
 
-    if(this.categoryName.trim() === '') return;
+  if(this.categoryName.trim() === '') return;
 
-    this.service.addCategory({ name: this.categoryName })
-      .subscribe({
-        next: (res:any)=>{
-          console.log("ADDED:", res);
+  const typesArray = this.categoryTypes
+    ? this.categoryTypes.split(',').map(t => t.trim())
+    : [];
 
-          // 🔥 IMPORTANT: reload from DB
-          this.loadCategories();
+  const data = {
+    name: this.categoryName,
+    types: typesArray
+  };
 
-          this.categoryName = '';
-        },
-        error: (err)=>{
-          console.error("ADD ERROR:", err);
-        }
-      });
-  }
+  this.service.addCategory(data).subscribe({
+    next:(res:any)=>{
+      this.loadCategories();
+
+      this.categoryName = '';
+      this.categoryTypes = '';
+
+      this.cdr.detectChanges();
+
+      const modalElement = document.getElementById('categoryModal');
+      const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+
+      if(modal){
+        modal.hide();
+      }
+    }
+  });
+}
 
   // 🔥 DELETE
   deleteCategory(id:any){
@@ -60,4 +83,63 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
+  openEditModal(category:any){
+  console.log("SELECTED:", category);  // 🔥 ADD
+
+  this.selectedCategory = category;
+
+  this.editCategoryName = category.name;
+
+  this.editCategoryTypes = category.types
+    ? category.types.join(', ')
+    : '';
+
+  const modalElement = document.getElementById('editCategoryModal');
+  const modal = new (window as any).bootstrap.Modal(modalElement);
+
+  modal.show();
+}
+
+updateCategory(){
+
+  console.log("UPDATE CLICKED");
+
+  if(!this.editCategoryName.trim()) return;
+
+  const typesArray = this.editCategoryTypes
+    ? this.editCategoryTypes.split(',').map(t => t.trim())
+    : [];
+
+  const data = {
+    name: this.editCategoryName,
+    types: typesArray
+  };
+
+  console.log("ID:", this.selectedCategory._id);
+  console.log("DATA:", data);
+
+  this.service.updateCategory(this.selectedCategory._id, data)
+    .subscribe({
+      next:(res:any)=>{
+        console.log("UPDATED:", res);
+
+        this.loadCategories();   // 🔥 table refresh
+
+        this.editCategoryName = '';
+        this.editCategoryTypes = '';
+
+        this.cdr.detectChanges();
+
+        const modalElement = document.getElementById('editCategoryModal');
+        const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+
+        if(modal){
+          modal.hide();
+        }
+      },
+      error:(err)=>{
+        console.log("UPDATE ERROR:", err);
+      }
+    });
+  }
 }

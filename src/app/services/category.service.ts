@@ -21,4 +21,7 @@ export class CategoryService {
   deleteCategory(id:any){
     return this.http.delete(this.baseUrl + '/' + id);
   }
+  updateCategory(id:any, data:any){
+  return this.http.put(this.baseUrl + '/' + id, data);
+}
 }

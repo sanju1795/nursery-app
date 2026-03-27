@@ -32,4 +32,24 @@ loadPlants() {
   });
 }
 
+ getPlants() {
+  this.productService.getProducts().subscribe((res: any) => {
+
+      // ✅ STEP 1: only plants filter
+      let onlyPlants = res.filter((p: any) => {
+        return p.category && p.category.name?.toLowerCase() === 'plants';
+      });
+
+      console.log("Only Plants:", onlyPlants);
+
+
+      this.plants = onlyPlants.slice(0, 4);
+
+    this.cdRef.detectChanges();
+
+  }, (err) => {
+    console.error(err);
+  });
+}
+
 }
