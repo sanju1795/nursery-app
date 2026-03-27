@@ -21,6 +21,7 @@
             <th>#</th>
             <th>Image</th>
             <th>Name</th>
+            <th>Category</th>
             <th>Price</th>
             <th>Stock</th>
             <th>Action</th>
@@ -38,6 +39,7 @@
               </td>
 
               <td>{{ product.name }}</td>
+              <td>{{ product.category?.name }}</td>
               <td>₹{{ product.price }}</td>
               <td>{{ product.stock }}</td>
 
@@ -85,23 +87,27 @@
 
           <select class="form-control mb-2"
   [(ngModel)]="newProduct.category"
-  name="category">
+  name="category"
+  (change)="onCategoryChange()">
 
   <option value="">Select Category</option>
-  <option value="Indoor">Indoor plants</option>
-  <option value="Outdoor">Outdoor plants</option>
-  <option value="medical">Medicinal plants</option>
+
+  <option *ngFor="let cat of categories" [value]="cat._id">
+    {{ cat.name }}
+  </option>
 
 </select>
 
-<select class="form-control mb-2"
+<select *ngIf="types.length > 0"
+  class="form-control mb-2"
   [(ngModel)]="newProduct.type"
-  name="type" placeholder="Select Type">
+  name="type">
 
   <option value="">Select Type</option>
-  <option value="Plants">Plants</option>
-  <option value="Planters">Planters</option>
-  <option value="Fertilizers">Fertilizers</option>
+
+  <option *ngFor="let t of types" [value]="t">
+    {{ t }}
+  </option>
 
 </select>
           <input type="text" class="form-control mb-2" placeholder="Description"

@@ -19,8 +19,8 @@ export class ProductService {
 }
 
   deleteProduct(id:any) {
-    return this.http.delete(this.baseUrl + '/' + id);
-  }
+  return this.http.delete(this.baseUrl + '/' + id);
+}
 
   updateProduct(id:any, data:any){
   return this.http.put(this.baseUrl + '/' + id, data);

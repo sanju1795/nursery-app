@@ -3,6 +3,7 @@ import { DashboardService } from '../../services/dashboard.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,8 @@ export class Dashboard implements OnInit {
   dashboardData: any;
   lowStock:any[] = [];
 
-  constructor(private dashboardService: DashboardService ,   private router: Router , private productService: ProductService) {}
+  constructor(private dashboardService: DashboardService ,   private router: Router , private productService: ProductService ,   private cdr: ChangeDetectorRef   // ✅ ADD THIS
+) {}
 
   ngOnInit() {
     this.loadData();
@@ -27,6 +29,8 @@ export class Dashboard implements OnInit {
     this.dashboardService.getDashboardData().subscribe((res:any) => {
       this.dashboardData = res;
       console.log(res);
+          this.cdr.detectChanges(); // ✅ IMPORTANT
+
     });
   }
 
@@ -45,6 +49,8 @@ goToUsers() {
 loadLowStock(){
   this.productService.getLowStock().subscribe((res:any)=>{
     this.lowStock = res;
+        this.cdr.detectChanges(); // ✅ IMPORTANT
+
   });
 }
 }

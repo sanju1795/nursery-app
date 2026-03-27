@@ -4,11 +4,10 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h3 class="fw-bold">Admin Dashboard</h3>
 
- <button class="btn btn-success" (click)="goToAddPlant()">
-  <i class="fa fa-plus"></i> Add Plant
-</button>
+  <button class="btn btn-success" (click)="goToAddPlant()">
+    <i class="fa fa-plus"></i> Add Plant
+  </button>
 </div>
-
 
 <!-- Summary Cards -->
 <div class="row g-4">
@@ -16,43 +15,38 @@
   <div class="col-md-3">
     <div class="card shadow-sm p-3">
       <h6 class="text-muted">Total Orders</h6>
-      <h3>{{dashboardData?.totalOrders}}</h3>    </div>
+      <h3>{{dashboardData?.totalOrders || 0}}</h3>
+    </div>
   </div>
 
   <div class="col-md-3">
     <div class="card shadow-sm p-3">
       <h6 class="text-muted">Completed Orders</h6>
-      <h3 class="text-success">{{dashboardData?.completedOrders}}</h3>
+      <h3 class="text-success">{{dashboardData?.completedOrders || 0}}</h3>
     </div>
   </div>
 
   <div class="col-md-3">
     <div class="card shadow-sm p-3">
       <h6 class="text-muted">Pending Orders</h6>
-      <h3 class="text-warning">{{dashboardData?.pendingOrders}}</h3>
+      <h3 class="text-warning">{{dashboardData?.pendingOrders || 0}}</h3>
     </div>
   </div>
 
   <div class="col-md-3">
     <div class="card shadow-sm p-3">
       <h6 class="text-muted">Cancelled Orders</h6>
-      <h3 class="text-danger">{{dashboardData?.cancelledOrders}}</h3>
+      <h3 class="text-danger">{{dashboardData?.cancelledOrders || 0}}</h3>
     </div>
   </div>
 
 </div>
 
-
-
 <!-- Quick Actions -->
 <div class="card shadow-sm mt-4">
-
-  <div class="card-header fw-bold">
-    Quick Actions
-  </div>
+  <div class="card-header fw-bold">Quick Actions</div>
 
   <div class="card-body">
-
     <div class="row text-center">
 
       <div class="col-md-4">
@@ -74,22 +68,14 @@
       </div>
 
     </div>
-
   </div>
-
 </div>
-
-
 
 <!-- Recent Orders -->
 <div class="card shadow-sm mt-4">
-
-  <div class="card-header fw-bold">
-    Recent Orders
-  </div>
+  <div class="card-header fw-bold">Recent Orders</div>
 
   <div class="card-body">
-
     <table class="table table-hover">
 
       <thead class="table-light">
@@ -103,80 +89,77 @@
       </thead>
 
       <tbody>
-
         <tr *ngFor="let order of dashboardData?.recentOrders" (click)="goToOrders()" style="cursor:pointer;">
-  <td>#{{order._id}}</td>
-  <td>{{order.user}}</td>
-  <td>{{order.plant}}</td>
+          <td>#{{order._id}}</td>
+          <td>{{order.customerName}}</td> <!-- FIX -->
+          <td>{{order.productName}}</td> <!-- FIX -->
 
-  <td>
-    <span class="badge"
-      [ngClass]="{
-        'bg-success': order.status === 'Delivered',
-        'bg-warning': order.status === 'Pending',
-        'bg-danger': order.status === 'Cancelled'
-      }">
-      {{order.status}}
-    </span>
-  </td>
+          <td>
+            <span class="badge"
+              [ngClass]="{
+                'bg-success': order.status === 'Delivered',
+                'bg-warning': order.status === 'Pending',
+                'bg-danger': order.status === 'Cancelled'
+              }">
+              {{order.status}}
+            </span>
+          </td>
 
-  <td>₹{{order.price}}</td>
-</tr>
-
+          <td>₹{{order.totalPrice}}</td> <!-- FIX -->
+        </tr>
       </tbody>
 
     </table>
-
   </div>
-
 </div>
-
-
 
 <!-- Today Summary + Low Stock -->
 <div class="row mt-4 g-4">
 
   <!-- Today Summary -->
-   <div class="col-md-6">
+  <div class="col-md-6">
     <div class="card shadow-sm p-3">
 
-      <div class="card-header fw-bold">
-        Today's Summary
-      </div>
+      <div class="card-header fw-bold">Today's Summary</div>
 
       <div class="card-body">
+        <h6 class="text-muted">Orders</h6>
 
-        <h6 class="text-muted ">Orders</h6>
-    
- <h3 class="text-primary">
-  {{dashboardData?.todayOrders}}
-  </h3>
+        <h3 class="text-primary">
+          {{dashboardData?.todayOrders || 0}}
+        </h3>
 
-  <h3 class="text-success">
-  {{dashboardData?.todayRevenue}}
-  </h3>
+        <h6 class="text-muted">Revenue</h6>
 
-  <!-- Low Stock Alerts -->
-   <div class="col-md-6">
+        <h3 class="text-success">
+          ₹{{dashboardData?.todayRevenue || 0}}
+        </h3>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- Low Stock -->
+  <div class="col-md-6">
     <div class="card shadow-sm">
 
-      <div class="card-header fw-bold">
-        Low Stock Alerts
-      </div>
+      <div class="card-header fw-bold">Low Stock Alerts</div>
 
       <ul class="list-group list-group-flush">
-      <p>Total Low Stock: {{ lowStock.length }}</p>
-@for (item of lowStock; track item._id) {
-  <li class="list-group-item d-flex justify-content-between">
-    {{item.name}}
-    <span class="badge bg-danger">{{item.stock}} left</span>
-  </li>
-}
+        <li class="list-group-item">
+          Total Low Stock: {{ lowStock.length || 0 }}
+        </li>
+
+        <li *ngFor="let item of lowStock" class="list-group-item d-flex justify-content-between">
+          {{item.name}}
+          <span class="badge bg-danger">{{item.stock}} left</span>
+        </li>
+
       </ul>
 
     </div>
 
+  
   </div>
 
 </div>
@@ -185,32 +168,27 @@
 
 <!-- Top Selling Plants -->
 <div class="card shadow-sm mt-4">
-
-  <div class="card-header fw-bold">
-    Top Selling Plants
-  </div>
+  <div class="card-header fw-bold">Top Selling Plants</div>
 
   <div class="card-body">
-
     <table class="table table-hover">
 
       <thead class="table-light">
         <tr>
-          <th>Plant ID</th>
+          <th>Plant Name</th>
           <th>Total Sold</th>
         </tr>
       </thead>
 
       <tbody>
-  <tr *ngFor="let plant of dashboardData?.topPlants">
-  <td>{{plant._id}}</td>
-  <td>{{plant.totalSold}}</td>
-  <td>
-    <span class="badge bg-success">Top</span>
-  </td>
-</tr>
+        <tr *ngFor="let plant of dashboardData?.topPlants">
+          <td>{{plant._id}}</td>
+          <td>{{plant.totalSold}}</td>
+        </tr>
       </tbody>
 
     </table>
-
   </div>
+</div>
+
+</div>

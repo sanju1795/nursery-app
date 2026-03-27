@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-products',
@@ -13,22 +14,30 @@ export class ProductsComponent implements OnInit {
 
   products:any[] = [];
   selectedFile:any;
+  categories:any[] = [];
+  types:string[] = [];
 
   newProduct:any = {
     name:'',
     price:null,
     stock:null,
-    category:'',   // ✅ ADD
-    image:''
+    category:'',  
+    type:'',
+    description:'',
+    image:'',
   };
 
   constructor(
     private productService: ProductService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private categoryService: CategoryService,   // ✅ ADD
+
   ) {}
 
   ngOnInit() {
     this.loadProducts();
+    this.loadCategories();   // ✅ ADD
+
   }
 
   loadProducts() {
@@ -93,12 +102,31 @@ if(modal){
   });
 }
 
-  deleteProduct(id:any){
-    this.productService.deleteProduct(id).subscribe(() => {
+ deleteProduct(id:any){
+  console.log("DELETE CLICKED:", id);   // 🔥 ADD THIS
+
+  this.productService.deleteProduct(id).subscribe({
+    next:()=>{
+      console.log("DELETED SUCCESS");
+
       this.products = this.products.filter(p => p._id !== id);
       this.cdr.detectChanges();
-    });
-  }
+    },
+    error:(err)=>{
+      console.log("DELETE ERROR:", err);
+    }
+  });
+}
 
+loadCategories(){
+  this.categoryService.getCategories().subscribe((res:any)=>{
+  this.categories = res;
+});
+}
 
+onCategoryChange(){
+  const selected = this.categories.find(c => c._id === this.newProduct.category);
+
+  this.types = selected?.types || [];
+}
 }

@@ -15,8 +15,10 @@
 
           <h5>{{ plant.name }}</h5>
 
-          <p class="text-muted">{{ plant.category }}</p>
+          <p class="text-muted">{{ plant.category?.name }}</p>
 
+          <p class="text-muted">{{ plant.type }}</p>
+          
           <p class="text-success fw-bold">₹{{ plant.price }}</p>
 
         </div>
