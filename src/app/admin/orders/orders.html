@@ -10,7 +10,7 @@
         <thead class="table-light">
           <tr>
             <th>#</th>
-            <th>Customer</th>
+            <th>Customer_id</th>
             <th>Product</th>
             <th>Amount</th>
             <th>Status</th>
@@ -23,8 +23,12 @@
           <tr *ngFor="let order of orders; let i=index; trackBy: trackById">
             <td>{{i+1}}</td>
 
-            <td>{{order.customerName}}</td>
-            <td>{{order.productName}}</td>
+            <td>{{order._id}}</td>
+              <td>
+                <div *ngFor="let item of order.items">
+                    {{ item.name }} (x{{ item.quantity }})
+                </div>
+  </td>
             <td>₹{{order.totalPrice}}</td>
 
             <td>
@@ -39,11 +43,12 @@
             </td>
 
             <td>
-              <button class="btn btn-sm btn-success"
-                      (click)="markDelivered(order)">
-                Deliver
-              </button>
-            </td>
+  <button 
+    class="btn btn-success btn-sm"
+    (click)="markDelivered(order._id)">
+    Deliver
+  </button>
+</td>
 
           </tr>
 

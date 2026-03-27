@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-orders',
@@ -14,7 +15,8 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     private service: OrderService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient
   ){}
 
   ngOnInit(){
@@ -37,18 +39,32 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  markDelivered(order:any){
-    const updated = { ...order, status: 'Delivered' };
+ markDelivered(orderId: string) {
 
-    this.service.updateOrder(order._id, updated).subscribe(()=>{
-      order.status = 'Delivered';
+  if (!confirm("Mark this order as Delivered?")) return;
 
-      // 🔥 instant UI update
-      this.cdr.detectChanges();
+  this.http.put(`http://localhost:3000/api/orders/deliver/${orderId}`, {})
+    .subscribe({
+      next: (res: any) => {
+
+        // 🔥 UI instant update
+       this.orders = this.orders.map(order => 
+           order._id === orderId
+            ? { ...order, status: 'Delivered' } // 🔥 NEW OBJECT
+            : order
+);
+  this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        alert("Update failed ❌");
+      }
     });
-  }
+}
 
   trackById(index:any, item:any){
   return item._id;
 }
+
+
 }

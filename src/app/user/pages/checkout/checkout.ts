@@ -4,6 +4,8 @@ import { CartService } from '../../../services/cart.service';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -18,6 +20,8 @@ export class CheckoutComponent implements OnInit {
   total = 0;
   addresses: any[] = [];
 
+  baseUrl = 'http://localhost:3000/api/orders';
+
     address: any = {
     name: '',
     phone: '',
@@ -28,7 +32,10 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private http: HttpClient,
+    private orderService: OrderService // 🔥 ADD
+
 
   ) {}
 
@@ -75,7 +82,7 @@ if (saved) {
     );
   }
 
- placeOrder() {
+placeOrder() {
 
   if (!this.address.name || !this.address.phone || !this.address.fullAddress) {
     alert("Fill all address fields ❗");
@@ -87,12 +94,47 @@ if (saved) {
     return;
   }
 
-  alert("Order placed successfully 🎉");
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  this.cartItems = [];
-  this.total = 0;
+  // 🔥 ORDER DATA (IMPORTANT)
+const orderData = {
+  userId: user._id,
+  items: this.cartItems.map(item => ({
+    productId: item.productId,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity,
+    image: item.image   // ✅ ADD THIS
+  })),
+  totalPrice: this.total,
+  address: this.address
+};
 
-  this.router.navigate(['/order-success']);
+  // 🔥 SAVE ORDER FIRST
+  this.http.post(this.baseUrl + '/place', orderData).subscribe({
+
+    next: () => {
+
+      // ✅ THEN CLEAR CART
+      this.cartService.clearCart().subscribe(() => {
+
+        alert("Order placed successfully 🎉");
+
+        this.cartItems = [];
+        this.total = 0;
+
+        this.router.navigate(['/order-success']);
+      });
+
+    },
+
+    error: (err) => {
+      console.error("Order save failed", err);
+      alert("Order failed ❌");
+    }
+
+  });
+
 }
 
 getLocation() {
@@ -153,4 +195,5 @@ selectAddress(addr: any) {
 isValidPincode(pin: string) {
   return /^[0-9]{6}$/.test(pin);
 }
+
 }

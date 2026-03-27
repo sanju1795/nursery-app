@@ -10,11 +10,23 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  getOrders(){
+  // ✅ PLACE ORDER
+  placeOrder(data: any) {
+    return this.http.post(this.baseUrl + '/place', data);
+  }
+
+  // ✅ ADMIN - GET ALL ORDERS (🔥 ERROR FIX 1)
+  getOrders() {
     return this.http.get(this.baseUrl);
   }
 
-  updateOrder(id:any, data:any){
+  // ✅ ADMIN - UPDATE ORDER (🔥 ERROR FIX 2)
+  updateOrder(id: any, data: any) {
     return this.http.put(this.baseUrl + '/' + id, data);
+  }
+
+  // ✅ USER ORDERS
+  getUserOrders(userId: string) {
+    return this.http.get(this.baseUrl + '/' + userId);
   }
 }
