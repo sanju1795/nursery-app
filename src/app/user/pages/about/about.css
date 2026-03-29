@@ -1,0 +1,80 @@
+.about-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  color: #2e7d32;
+}
+
+.desc {
+  margin: 15px 0;
+  color: #555;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.card {
+  flex: 1;
+  background: #f1f8e9;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* Contact */
+.contact-box {
+  background: linear-gradient(135deg, #56ab2f, #a8e063);
+  padding: 20px;
+  border-radius: 15px;
+  color: white;
+}
+
+input, textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  color: green;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+.success {
+  margin-top: 10px;
+  font-weight: bold;
+}
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}

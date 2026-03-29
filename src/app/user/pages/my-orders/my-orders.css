@@ -1,0 +1,105 @@
+/* ORDERS */
+.orders-section h4 {
+  font-weight: bold;
+}
+
+.orders-title{
+text-align: center;
+}
+.no-orders {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* ORDER CARD */
+.order-card {
+  background: #fff;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* HEADER */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: green;
+}
+
+/* ITEMS */
+.order-item {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+/* IMAGE */
+.product-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* DETAILS */
+.item-details {
+  flex: 1;
+}
+
+.item-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.cancel-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.cancelled {
+  color: red;
+  font-weight: bold;
+}
+
+.tracking-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.step {
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #eee;
+  font-size: 12px;
+}
+
+.step.active {
+  background: #28a745;
+  color: white;
+}
+
+.line {
+  flex: 1;
+  height: 2px;
+  background: #ccc;
+}

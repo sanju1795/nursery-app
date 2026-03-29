@@ -7,10 +7,7 @@
       + Add Product
     </button>
   </div>
-
-  <!-- DEBUG -->
-  <p>Total Products: {{ products.length }}</p>
-
+  
   <div class="card shadow-sm border-0">
     <div class="card-body">
 
@@ -35,7 +32,7 @@
               <td>{{$index + 1}}</td>
 
               <td>
-                <img [src]="product.image || 'https://via.placeholder.com/50'" width="50">
+                <img [src]="'http://localhost:3000/uploads/' + product.image"  width="50">
               </td>
 
               <td>{{ product.name }}</td>
@@ -67,7 +64,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <form (ngSubmit)="addProduct()">
+      <form #productForm="ngForm" (ngSubmit)="addProduct(productForm)">
 
         <div class="modal-header">
           <h5 class="modal-title">Add Product</h5>
@@ -112,10 +109,8 @@
 </select>
           <input type="text" class="form-control mb-2" placeholder="Description"
             [(ngModel)]="newProduct.description" name="description">
-      <input type="text" class="form-control mb-2"
-  placeholder="Image Path (assets/images/plant.jpg)"
-  [(ngModel)]="newProduct.image"
-  name="image">
+      <input type="file" #fileInput class="form-control mb-2"
+(change)="onImageUpload($event)">
 
         </div>
 

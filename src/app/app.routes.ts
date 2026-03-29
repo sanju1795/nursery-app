@@ -13,6 +13,10 @@ import { CartComponent } from './user/pages/cart/cart';
 import { ProfileComponent } from './user/pages/profile/profile';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
 import { CheckoutComponent } from './user/pages/checkout/checkout';
+import { MyOrdersComponent } from './user/pages/my-orders/my-orders';
+import { AboutComponent } from './user/pages/about/about';
+import { ContactMessagesComponent } from './admin/contact-messages/contact-messages';
+
 
 export const routes: Routes = [
 
@@ -40,11 +44,14 @@ export const routes: Routes = [
       { path: 'product/:id', component: ProductDetailsComponent },
       { path: 'blog/:id', component: BlogDetailsComponent },
       { path: 'profile', component: ProfileComponent},
+      { path: 'my-orders', component: MyOrdersComponent },
       { path: 'order-success', component: OrderSuccessComponent },
       { path: 'login', component: LoginComponent },
       { path: 'plants', component: PlantsComponent },
       { path: 'user-categories', component: UserCategoriesComponent },
-      { path: 'checkout', component: CheckoutComponent}
+      { path: 'checkout', component: CheckoutComponent},
+      { path: 'about',component: AboutComponent},
+      {path: 'admin/messages',component: ContactMessagesComponent}
     ]
   }
 ];

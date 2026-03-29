@@ -54,46 +54,48 @@ export class ProductsComponent implements OnInit {
   }
 
   // ✅ ADD PRODUCT (UPDATED)
-  addProduct(){
+addProduct(form:any){
 
   if(!this.newProduct.name || !this.newProduct.price || !this.newProduct.category){
     alert("Please fill all fields");
     return;
   }
 
-  const productData = {
-    name: this.newProduct.name,
-    price: this.newProduct.price,
-    stock: this.newProduct.stock,
-    category: this.newProduct.category,
-    type: this.newProduct.type,
-    description: this.newProduct.description,
-    image: this.newProduct.image   // 👈 direct path
-  };
+  const formData = new FormData();
 
-  this.productService.addProduct(productData).subscribe({
+  formData.append('name', this.newProduct.name);
+  formData.append('price', this.newProduct.price);
+  formData.append('stock', this.newProduct.stock);
+  formData.append('category', this.newProduct.category);
+  formData.append('type', this.newProduct.type);
+  formData.append('description', this.newProduct.description);
+
+  if(this.selectedFile){
+    formData.append('image', this.selectedFile);
+  }
+
+  this.productService.addProduct(formData).subscribe({
     next: (res:any) => {
-      console.log("Saved:", res);
+
+      res.image = 'http://localhost:3000/uploads/' + res.image;
 
       this.products.unshift(res);
       this.cdr.detectChanges();
 
-      this.newProduct = {
-  name:'',
-  price:null,
-  stock:null,
-  category:'',
-  type:'',
-  description:'',
-  image:''
-};
+      // ✅ FORM RESET (important)
+      form.resetForm();
 
-const modalElement = document.getElementById('addProductModal');
-const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+      // ✅ VARIABLES RESET
+      this.selectedFile = null;
+      this.types = [];
 
-if(modal){
-  modal.hide();
-}
+      // ✅ MODAL CLOSE
+      const modal = document.getElementById('addProductModal');
+      if(modal){
+        const bootstrapModal = (window as any).bootstrap.Modal.getInstance(modal);
+        bootstrapModal?.hide();
+      }
+
     },
     error: (err) => {
       console.log(err);

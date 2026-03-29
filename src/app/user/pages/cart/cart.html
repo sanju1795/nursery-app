@@ -19,8 +19,8 @@
 
           <!-- IMAGE -->
           <div class="col-md-3">
-            <img [src]="item.image" class="img-fluid rounded">
-          </div>
+            <p>{{ item.image }}</p>
+<img [src]="'http://localhost:3000/uploads/' + item.image">          </div>
 
           <!-- DETAILS -->
           <div class="col-md-5">

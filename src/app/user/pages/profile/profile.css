@@ -1,104 +1,95 @@
-/* PROFILE CARD */
+/* Background */
+.profile-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Card */
 .profile-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  transition: 0.3s;
 }
 
-.user-info p {
-  margin: 5px 0;
+.profile-card:hover {
+  transform: translateY(-5px);
 }
 
-.logout-btn {
-  margin-top: 10px;
-  background: #ff4d4f;
-  border: none;
-  padding: 8px 15px;
+/* Avatar */
+.avatar {
+  width: 80px;
+  height: 80px;
+  background: #4caf50;
   color: white;
-  border-radius: 5px;
-  cursor: pointer;
+  font-size: 32px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+/* Title */
+.title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Name */
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* Email */
+.email {
+  color: #777;
+  font-size: 14px;
+}
+
+/* Buttons */
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Common button */
+.btn {
+  flex: 1;
+  height: 45px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: 0.3s;
+  border: none;
+}
+
+/* Logout */
+.logout-btn {
+  background: #ff4d4f;
+  color: white;
 }
 
 .logout-btn:hover {
-  background: #e60023;
+  background: #e53935;
 }
 
-/* ORDERS */
-.orders-section h4 {
-  font-weight: bold;
-}
-
-.no-orders {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* ORDER CARD */
-.order-card {
-  background: #fff;
-  padding: 15px;
-  margin-top: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* HEADER */
-.order-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.order-price {
-  font-size: 20px;
-  font-weight: bold;
-  color: green;
-}
-
-/* ITEMS */
-.order-item {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  gap: 15px;
-}
-
-/* IMAGE */
-.product-img {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-/* DETAILS */
-.item-details {
-  flex: 1;
-}
-
-.item-name {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-.cancel-btn {
-  background: #ff4d4f;
+/* Orders */
+.order-btn {
+  background: #4caf50;
   color: white;
-  border: none;
-  padding: 5px 10px;
-  margin-top: 5px;
-  border-radius: 6px;
-  font-size: 12px;
 }
 
-.pending {
-  color: orange;
-  font-weight: bold;
-}
-
-.cancelled {
-  color: red;
-  font-weight: bold;
+.order-btn:hover {
+  background: #43a047;
 }

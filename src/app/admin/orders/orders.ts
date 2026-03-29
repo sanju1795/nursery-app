@@ -66,5 +66,51 @@ export class OrdersComponent implements OnInit {
   return item._id;
 }
 
+handleAction(orderId: string, type: 'exchange' | 'return', action: 'Accepted' | 'Rejected') {
+
+  this.http.put(`http://localhost:3000/api/orders/admin/order-action/${orderId}`, {
+    type,
+    action
+  }).subscribe({
+    next: () => {
+
+      // 🔥 UI UPDATE
+      this.orders = this.orders.map(order => {
+        if (order._id === orderId) {
+          if (type === 'exchange') {
+            order.exchangeStatus = action;
+          }
+          if (type === 'return') {
+            order.returnStatus = action;
+          }
+        }
+        return order;
+      });
+
+      this.cdr.detectChanges();
+
+    },
+    error: () => alert("Action failed ❌")
+  });
+}
+
+updateStatus(orderId: string, event: any) {
+  const newStatus = event.target.value;
+
+  this.http.put(`http://localhost:3000/api/orders/status/${orderId}`, {
+    status: newStatus
+  }).subscribe({
+    next: () => {
+      this.orders = this.orders.map(order =>
+        order._id === orderId
+          ? { ...order, status: newStatus }
+          : order
+      );
+      this.cdr.detectChanges();
+    },
+    error: () => alert("Status update failed ❌")
+  });
+}
+
 
 }

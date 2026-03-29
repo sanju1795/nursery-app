@@ -10,11 +10,14 @@
         <thead class="table-light">
           <tr>
             <th>#</th>
+            <th>order_id</th>
             <th>Customer_id</th>
             <th>Product</th>
             <th>Amount</th>
             <th>Status</th>
             <th>Action</th>
+            <th>Exchange</th>
+            <th>Return</th>
           </tr>
         </thead>
 
@@ -24,6 +27,7 @@
             <td>{{i+1}}</td>
 
             <td>{{order._id}}</td>
+            <td> {{ order.userId}}</td>
               <td>
                 <div *ngFor="let item of order.items">
                     {{ item.name }} (x{{ item.quantity }})
@@ -32,22 +36,68 @@
             <td>₹{{order.totalPrice}}</td>
 
             <td>
-              <span class="badge"
-                [ngClass]="{
-                  'bg-warning': order.status=='Pending',
-                  'bg-primary': order.status=='Shipped',
-                  'bg-success': order.status=='Delivered'
-                }">
-                {{order.status}}
-              </span>
-            </td>
+  <select class="form-select form-select-sm"
+    [value]="order.status"
+    (change)="updateStatus(order._id, $event)">
+
+    <option value="Pending">Pending</option>
+    <option value="Shipped">Shipped</option>
+    <option value="Delivered">Delivered</option>
+  </select>
+</td>
+
 
             <td>
-  <button 
-    class="btn btn-success btn-sm"
-    (click)="markDelivered(order._id)">
-    Deliver
-  </button>
+
+  <!-- Deliver -->
+ <button 
+  class="btn btn-success btn-sm me-2"
+  *ngIf="order.status !== 'Delivered'"
+  (click)="markDelivered(order._id)">
+  Deliver
+</button>
+
+
+  <!-- Exchange -->
+  <div *ngIf="order.exchangeRequested && order.exchangeStatus === 'Pending'" class="exchange-return-btn">
+    <button class="btn btn-primary btn-sm me-1 mt-2"
+      (click)="handleAction(order._id, 'exchange', 'Accepted')">
+      Accept
+    </button>
+
+    <button class="btn btn-danger btn-sm mt-2"
+      (click)="handleAction(order._id, 'exchange', 'Rejected')">
+      Reject
+    </button>
+  </div>
+
+  <!-- Return -->
+  <div *ngIf="order.returnRequested && order.returnStatus === 'Pending'">
+    <button class="btn btn-primary btn-sm me-1"
+      (click)="handleAction(order._id, 'return', 'Accepted')">
+      Accept
+    </button>
+
+    <button class="btn btn-danger btn-sm"
+      (click)="handleAction(order._id, 'return', 'Rejected')">
+      Reject
+    </button>
+  </div>
+
+</td>
+
+<td>
+  <span *ngIf="order.exchangeRequested">
+    {{order.exchangeStatus}}
+  </span>
+  <span *ngIf="!order.exchangeRequested">-</span>
+</td>
+
+<td>
+  <span *ngIf="order.returnRequested">
+    {{order.returnStatus}}
+  </span>
+  <span *ngIf="!order.returnRequested">-</span>
 </td>
 
           </tr>

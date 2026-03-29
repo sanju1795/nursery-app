@@ -6,11 +6,11 @@
 
     <div class="col-md-3 mb-4" *ngFor="let plant of plants">
 
-      <div class="card product-card shadow-sm"
+      <div class="card product-card shadow-sm h-100"
            [routerLink]="['/product', plant._id]">
 
-        <img [src]="plant.image" class="card-img-top">
-
+<img [src]="'http://localhost:3000/uploads/' + plant.image" class="card-img-top" 
+style="height:150px; object-fit:cover;">
         <div class="card-body text-center">
 
           <h5>{{ plant.name }}</h5>

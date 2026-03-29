@@ -7,6 +7,7 @@ import { ProductsComponent } from './products/products';
 import { OrdersComponent } from './orders/orders';
 import { UsersComponent } from './users/users';
 import { CategoriesComponent } from './categories/categories';
+import { ContactMessagesComponent } from './contact-messages/contact-messages';
 export const ADMIN_ROUTES: Routes = [
 
   // ✅ login page (without layout)
@@ -23,7 +24,8 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'products',component: ProductsComponent },
       { path: 'orders',component: OrdersComponent },
       { path: 'users',component: UsersComponent },
-      { path: 'categories',component: CategoriesComponent }
+      { path: 'categories',component: CategoriesComponent },
+      { path: 'messages',component:ContactMessagesComponent}
     ]
   }
 

@@ -34,14 +34,10 @@
     <div class="col-md-4 mb-4"
          *ngFor="let product of filteredProducts">
 
-      <div class="card product-card shadow-sm h-100"
+      <div class="card product-card shadow-sm h-200"
            [routerLink]="['/product', product._id]">  <!-- 🔥 FIX -->
 
-       <img
-          [src]="product.image"
-          class="card-img-top"
-          onerror="this.src='https://via.placeholder.com/300x200'"
->
+      <img [src]="'http://localhost:3000/uploads/' + product.image" class="card-img-top" style="height:250px; object-fit:cover;">
 <div class="card-body text-center">
 
   <h5>{{product.name}}</h5>

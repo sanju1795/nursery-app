@@ -1,0 +1,79 @@
+<div class="about-container">
+
+  <!-- 🌿 ABOUT SECTION -->
+  <h1 class="title">Welcome to GreenNest 🌱</h1>
+
+  <p class="desc">
+    GreenNest is your one-stop destination for beautiful plants, gardening tools,
+    and eco-friendly living. We believe in making the world greener 💚
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>🌍 Our Mission</h3>
+      <p>To spread greenery and promote sustainable living.</p>
+    </div>
+
+    <div class="card">
+      <h3>🌿 Our Vision</h3>
+      <p>Every home filled with fresh plants and positive vibes.</p>
+    </div>
+  </div>
+
+  <!-- 📞 CONTACT SECTION -->
+  <div class="contact-box">
+    <h2>Contact GreenNest 🌱</h2>
+
+    <form #contactForm="ngForm" (ngSubmit)="sendMessage(contactForm)">
+
+      <!-- Name -->
+      <input 
+        type="text" 
+        [(ngModel)]="contact.name" 
+        name="name" 
+        placeholder="Your Name" 
+        required 
+        #name="ngModel">
+
+      <div class="error" *ngIf="name.invalid && name.touched">
+        Name is required
+      </div>
+
+      <!-- Email -->
+      <input 
+        type="email" 
+        [(ngModel)]="contact.email" 
+        name="email" 
+        placeholder="Your Email" 
+        required 
+        #email="ngModel">
+
+      <div class="error" *ngIf="email.invalid && email.touched">
+        Valid email is required
+      </div>
+
+      <!-- Message -->
+      <textarea 
+        [(ngModel)]="contact.message" 
+        name="message" 
+        placeholder="Your Message" 
+        required 
+        #message="ngModel">
+      </textarea>
+
+      <div class="error" *ngIf="message.invalid && message.touched">
+        Message is required
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="contactForm.invalid">
+        Send Message
+      </button>
+
+    </form>
+
+    <!-- Success Message -->
+    <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
+  </div>
+
+</div>

@@ -1,80 +1,33 @@
-<div class="container mt-5">
+<div class="profile-wrapper">
+  
 
-  <!-- USER INFO -->
-  <div class="profile-card">
-    <h3>👤 My Profile</h3>
+  <div class="profile-card text-center">
 
+      <!-- Title -->
+    <h3 class="title" mb="10px">My Profile</h3>
+
+    <!-- Avatar -->
+    <div class="avatar">
+      {{ user?.name?.charAt(0) || 'U' }}
+    </div>
+
+    <!-- Info -->
     <p class="name">{{ user?.name }}</p>
     <p class="email">{{ user?.email }}</p>
 
-    <button class="logout-btn" (click)="logout()">Logout</button>
-  </div>
+    <!-- Buttons -->
+    <div class="btn-group mt-4">
 
-  <!-- ORDERS -->
-  <h4 class="orders-title">🛒 My Orders</h4>
+      <button class="btn logout-btn" (click)="logout()">
+        Logout
+      </button>
 
-  <!-- 🔥 LOADING -->
-  <div *ngIf="loading">
-    <p>Loading orders...</p>
-  </div>
-
-  <!-- 🔥 NO ORDERS -->
-  <div *ngIf="!loading && orders.length === 0">
-    <p>No orders yet 😔</p>
-  </div>
-
-  <!-- 🔥 ORDER LIST -->
-  <div *ngIf="!loading && orders.length > 0">
-    <div *ngFor="let order of orders" class="order-card">
-
-      <!-- TOP -->
-      <div class="order-header">
-  <div>
-    <p><b>Order Date:</b> {{ order.createdAt | date:'mediumDate' }}</p>
-    <p>
-      <b>Status:</b> 
-      <span [ngClass]="{
-        'pending': order.status === 'Pending',
-        'cancelled': order.status === 'Cancelled'
-      }">
-        {{ order.status }}
-      </span>
-    </p>
-  </div>
-
-  <div>
-    <div class="price">₹{{ order.totalPrice }}</div>
-
-    <!-- 🔥 CANCEL BUTTON -->
-   <button 
-  class="btn btn-danger btn-sm"
-  *ngIf="order.status === 'Pending'"
-  (click)="cancelOrder(order._id)">
-  Cancel Order
-</button>
-  </div>
-</div>
-
-      <hr>
-
-      <!-- ITEMS -->
-      <div *ngFor="let item of order.items" class="item-row">
-
-        <img
-          [src]="item.image"
-          class="product-img"
-          alt="product"
-        >
-
-        <div class="item-details">
-          <p class="product-name">{{ item.name }}</p>
-          <p>Qty: {{ item.quantity }}</p>
-          <p class="price">₹{{ item.price }}</p>
-        </div>
-
-      </div>
+      <button class="btn order-btn" [routerLink]="['/my-orders']">
+        My Orders
+      </button>
 
     </div>
+
   </div>
 
 </div>
